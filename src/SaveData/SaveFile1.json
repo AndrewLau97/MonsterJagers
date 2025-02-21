@@ -1,0 +1,18 @@
+{
+  "level": 1,
+  "xp": 0,
+  "health": 100,
+  "gold": 50,
+  "inventory": {
+    "standardWeapon": ["stick"],
+    "fireWeapon": [],
+    "waterWeapon": [],
+    "earthWeapon": [],
+    "fireMagic": [],
+    "waterMagic": [],
+    "earthMagic": [],
+    "shieldsOwned": []
+  },
+  "stats": { "hp": 1, "mp": 1, "atk": 1, "def": 1 },
+  "potions": { "hp": 0, "mp": 0 }
+}
