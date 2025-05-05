@@ -1,7 +1,7 @@
 import {
   explore,
   goHunt,
-  goFight,
+  // goFight,
   goExplore,
   restInn,
   campOutside,
@@ -30,12 +30,7 @@ import {
   purchaseMpPotion,
 } from "./PurchaseFn";
 
-import {
-  fightSlime,
-  fightWizard,
-  fightElemental,
-  // defeatMonster,
-} from "./MonstersFn";
+import { fightSlime, fightWizard, fightElemental } from "./SelectMonstersFn";
 
 import {
   useNormalWeapon,
@@ -51,7 +46,10 @@ import {
   useItems,
   useHpPotion,
   useMpPotion,
-} from "./AttackFn"
+  goFightButtons,
+} from "./AttackFn";
+
+import { levelUp, restAtInn, levelMp, levelAtk, levelDef } from "./InnFn";
 
 const locations = [
   {
@@ -148,7 +146,7 @@ const locations = [
     name: "Explore",
     "button text": [
       "Go hunting",
-      "Explore the outskirts of town",
+      "Explore the outer reaches of the town",
       "Rest at the Inn",
       "Return to town",
     ],
@@ -181,7 +179,7 @@ const locations = [
     "button functions": [
       useNormalWeapon,
       useElementalWeapon,
-      goFight,
+      goFightButtons,
       dummyFunction,
     ],
     text: "Which weapon would you like to use?",
@@ -207,14 +205,24 @@ const locations = [
     //11
     name: "Use Magic",
     "button text": ["Fire Magic", "Water Magic", "Earth Magic", "Go Back"],
-    "button functions": [useFireMagic, useWaterMagic, useEarthMagic, goFight],
+    "button functions": [
+      useFireMagic,
+      useWaterMagic,
+      useEarthMagic,
+      goFightButtons,
+    ],
     text: "Which weapon would you like to use?",
   },
   {
     //12
     name: "Use Item",
     "button text": ["Use HP Potion", "Use MP Potion", "Go Back", ""],
-    "button functions": [useHpPotion, useMpPotion, goFight, dummyFunction],
+    "button functions": [
+      useHpPotion,
+      useMpPotion,
+      goFightButtons,
+      dummyFunction,
+    ],
     text: "Which weapon would you like to use?",
   },
   {
@@ -235,6 +243,20 @@ const locations = [
     ],
     "button functions": [goTown, goHunt, restInn, campOutside],
     text: "You have slain the monster and gained gold and xp, where would you like to go?",
+  },
+
+  {
+    //15
+    name: "Rest At Inn",
+    "button text": ["Return to Town", "Keep Hunting", "Level Up", "Rest"],
+    "button functions": [goTown, goHunt, levelUp, restAtInn],
+  },
+
+  {
+    //16
+    name: "Level up",
+    "button text": ["Atk", "Def", "Mp", "Go Back"],
+    "button functions": [levelAtk, levelDef, levelMp, restInn],
   },
 ];
 

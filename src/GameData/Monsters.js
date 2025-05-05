@@ -1,4 +1,80 @@
-const monsters = [
+// const monsters = [
+//     {
+//       name: "Fire Slime",
+//       level: 5,
+//       health: 15,
+//       immune: "fire",
+//       resistant: "earth",
+//       weakness: "water",
+//     },
+//     {
+//       name: "Water Slime",
+//       level: 5,
+//       health: 15,
+//       immune: "water",
+//       resistant: "fire",
+//       weakness: "earth",
+//     },
+//     {
+//       name: "Metal Slime",
+//       level: 5,
+//       health: 15,
+//       immune: "earth",
+//       resistant: "water",
+//       weakness: "fire",
+//     },
+//     {
+//       name: "Flame Wizard",
+//       level: 10,
+//       health: 50,
+//       immune: "fire",
+//       resistant: "earth",
+//       weakness: "water",
+//     },
+//     {
+//       name: "Ice Sorcerer",
+//       level: 10,
+//       health: 50,
+//       immune: "water",
+//       resistant: "fire",
+//       weakness: "earth",
+//     },
+//     {
+//       name: "Shaman",
+//       level: 10,
+//       health: 50,
+//       immune: "earth",
+//       resistant: "water",
+//       weakness: "fire",
+//     },
+//     {
+//       name: "Blaze Elemental",
+//       level: 20,
+//       health: 150,
+//       immune: "fire",
+//       resistant: "earth",
+//       weakness: "water",
+//     },
+//     {
+//       name: "Blizzard Elemental",
+//       level: 20,
+//       health: 150,
+//       immune: "water",
+//       resistant: "fire",
+//       weakness: "earth",
+//     },
+//     {
+//       name: "Earth Elemental",
+//       level: 20,
+//       health: 150,
+//       immune: "earth",
+//       resistant: "water",
+//       weakness: "fire",
+//     },
+//   ];
+
+const monsters = {
+  slimes: [
     {
       name: "Fire Slime",
       level: 5,
@@ -6,6 +82,7 @@ const monsters = [
       immune: "fire",
       resistant: "earth",
       weakness: "water",
+      neutral: "normal",
     },
     {
       name: "Water Slime",
@@ -14,6 +91,7 @@ const monsters = [
       immune: "water",
       resistant: "fire",
       weakness: "earth",
+      neutral: "normal",
     },
     {
       name: "Metal Slime",
@@ -22,31 +100,39 @@ const monsters = [
       immune: "earth",
       resistant: "water",
       weakness: "fire",
+      neutral: "normal",
     },
+  ],
+  wizards: [
     {
       name: "Flame Wizard",
       level: 10,
-      health: 50,
+      health: 100,
       immune: "fire",
       resistant: "earth",
       weakness: "water",
+      neutral: "normal",
     },
     {
       name: "Ice Sorcerer",
       level: 10,
-      health: 50,
+      health: 100,
       immune: "water",
       resistant: "fire",
       weakness: "earth",
+      neutral: "normal",
     },
     {
       name: "Shaman",
       level: 10,
-      health: 50,
+      health: 100,
       immune: "earth",
       resistant: "water",
       weakness: "fire",
+      neutral: "normal",
     },
+  ],
+  elementals: [
     {
       name: "Blaze Elemental",
       level: 20,
@@ -54,6 +140,7 @@ const monsters = [
       immune: "fire",
       resistant: "earth",
       weakness: "water",
+      neutral: "normal",
     },
     {
       name: "Blizzard Elemental",
@@ -62,6 +149,7 @@ const monsters = [
       immune: "water",
       resistant: "fire",
       weakness: "earth",
+      neutral: "normal",
     },
     {
       name: "Earth Elemental",
@@ -70,5 +158,10 @@ const monsters = [
       immune: "earth",
       resistant: "water",
       weakness: "fire",
+      neutral: "normal",
     },
-  ];
+  ],
+};
+
+
+export default monsters

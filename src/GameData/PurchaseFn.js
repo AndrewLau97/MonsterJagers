@@ -1,198 +1,135 @@
-// import { saveFileOne } from "../SaveData/SaveFile";
-import {
-  standardWeapons,
-  fireWeapons,
-  waterWeapons,
-  earthWeapons,
-  fireMagic,
-  waterMagic,
-  earthMagic,
-  shields,
-} from "./Items";
+import { gameItems } from "./Items";
 
-function buyWeapon(
-  currentWeapon,
-  weapon,
-  price,
-  weaponInventory,
-  purchased,
-  noMoney,
-  owned
-) {
-  if (currentWeapon < weapon.length - 1) {
-    if (gold >= price) {
-      gold -= price;
-      currentWeapon++;
-      goldText.innerText = gold;
-      let newWeapon = weapon[currentWeapon].name;
-      purchased(newWeapon);
-      weaponInventory.push(newWeapon);
-      return "bought";
+import {
+  purchasedMagic,
+  purchasedWeapon,
+  purchasedShield,
+  noMoneyMagic,
+  noMoneyShield,
+  noMoneyWeapon,
+  powerfulMagic,
+  powerfulShield,
+  powerfulWeapon,
+  buyPotion,
+  noMoneyPotion,
+} from "./GameText";
+
+import updateData from "./UpdateDataBase";
+// import supabase from "../config/supabaseClient";
+
+// const updateData = async (saveFile) => {
+//   const {
+//     data: { user },
+//   } = await supabase.auth.getUser();
+//   const { data } = await supabase
+//     .from("users")
+//     .update({ saveData: saveFile })
+//     .eq("id", user.id);
+// };
+
+function buyWeapon(saveFile, inventoryType, setGameText) {
+  const { inventory } = saveFile;
+  const purchasableItems = gameItems[inventoryType].filter(
+    (item) => !inventory[inventoryType].includes(item.name)
+  );
+
+  if (purchasableItems.length) {
+    if (purchasableItems[0].price <= saveFile.gold) {
+      saveFile.gold -= purchasableItems[0].price;
+      saveFile.inventory[inventoryType].unshift(purchasableItems[0].name);
+      updateData(saveFile);
+      if (inventoryType.includes("Weapon")) {
+        setGameText(purchasedWeapon(purchasableItems[0].name));
+      } else if (inventoryType.includes("Magic")) {
+        setGameText(purchasedMagic(purchasableItems[0].name));
+      } else if (inventoryType.includes("shield")) {
+        setGameText(purchasedShield(purchasableItems[0].name));
+      }
     } else {
-      noMoney(price, gold);
+      if (inventoryType.includes("Weapon")) {
+        setGameText(noMoneyWeapon(purchasableItems[0].price, saveFile.gold));
+      } else if (inventoryType.includes("Magic")) {
+        setGameText(noMoneyMagic(purchasableItems[0].price, saveFile.gold));
+      } else if (inventoryType.includes("shield")) {
+        setGameText(noMoneyShield(purchasableItems[0].price, saveFile.gold));
+      }
     }
   } else {
-    owned;
+    if (inventoryType.includes("Weapon")) {
+      const weaponType = inventoryType.replace("Weapon", "");
+      if (weaponType === "standard") {
+        setGameText(powerfulWeapon());
+      } else {
+        setGameText(powerfulWeapon(weaponType));
+      }
+    } else if (inventoryType.includes("Magic")) {
+      setGameText(powerfulMagic(inventoryType.replace("Magic", "")));
+    } else if (inventoryType.includes("shield")) {
+      setGameText(powerfulShield());
+    }
   }
 }
 
-function buyStandardWeapon() {
-  const standardWeaponsOwned = saveFileOne.inventory.standardWeapon
-  const itemsForPurchase=standardWeapons.filter((weapon)=>!standardWeaponsOwned.includes(weapon.name))
-  console.log(itemsForPurchase[0])
-  saveFileOne.inventory.standardWeapon.push(itemsForPurchase[0].name)
-  console.log(saveFileOne.inventory.standardWeapon)
-  // if (
-  //   buyWeapon(
-  //     currentStandardWeapon,
-  //     standardWeapons,
-  //     20 * standardWeaponInventory.length,
-  //     standardWeaponInventory,
-  //     purchasedWeapon,
-  //     noMoneyWeapon,
-  //     powerfulWeapon()
-  //   ) === "bought"
-  // ) {
-  //   currentStandardWeapon++;
-  // }
+function buyStandardWeapon(_location, saveFile, setGameText) {
+  const inventoryType = "standardWeapon";
+  buyWeapon(saveFile, inventoryType, setGameText);
 }
 
-function buyFireWeapon() {
-  if (
-    buyWeapon(
-      currentFireWeapon,
-      fireWeapons,
-      40 * (fireWeaponInventory.length + 1),
-      fireWeaponInventory,
-      purchasedWeapon,
-      noMoneyWeapon,
-      powerfulWeapon()
-    ) === "bought"
-  ) {
-    currentFireWeapon++;
+function buyFireWeapon(_location, saveFile, setGameText) {
+  const inventoryType = "fireWeapon";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function buyWaterWeapon(_location, saveFile, setGameText) {
+  const inventoryType = "waterWeapon";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function buyEarthWeapon(_location, saveFile, setGameText) {
+  const inventoryType = "earthWeapon";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function buyFireMagic(_location, saveFile, setGameText) {
+  const inventoryType = "fireMagic";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function buyWaterMagic(_location, saveFile, setGameText) {
+  const inventoryType = "waterMagic";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function buyEarthMagic(_location, saveFile, setGameText) {
+  const inventoryType = "earthMagic";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function buyShield(_location, saveFile, setGameText) {
+  const inventoryType = "shield";
+  buyWeapon(saveFile, inventoryType, setGameText);
+}
+
+function purchasePotion(saveFile, setGameText, potionType) {
+  const potionCost=10*saveFile.level
+  if (saveFile.gold >= potionCost) {
+    saveFile.gold-=potionCost;
+    saveFile.potions[potionType]++;
+    updateData(saveFile);
+    setGameText(buyPotion(potionType,saveFile.potions[potionType]))
+  }else{
+    setGameText(noMoneyPotion(potionCost, saveFile.gold, potionType))
   }
 }
 
-function buyWaterWeapon() {
-  if (
-    buyWeapon(
-      currentWaterWeapon,
-      waterWeapons,
-      40 * (waterWeaponInventory.length + 1),
-      waterWeaponInventory,
-      purchasedWeapon,
-      noMoneyWeapon,
-      powerfulWeapon()
-    ) === "bought"
-  ) {
-    currentWaterWeapon++;
-  }
+function purchaseHpPotion(_location, saveFile, setGameText) {
+  const potionType = "hp";
+  purchasePotion(saveFile, setGameText, potionType);
 }
 
-function buyEarthWeapon() {
-  if (
-    buyWeapon(
-      currentEarthWeapon,
-      earthWeapons,
-      40 * (earthWeaponInventory.length + 1),
-      earthWeaponInventory,
-      purchasedWeapon,
-      noMoneyWeapon,
-      powerfulWeapon()
-    ) === "bought"
-  ) {
-    currentEarthWeapon++;
-  }
-}
-
-function buyFireMagic() {
-  if (
-    buyWeapon(
-      currentFireMagic,
-      fireMagic,
-      40 * (learntFireMagic.length + 1),
-      learntFireMagic,
-      purchasedMagic,
-      noMoneyMagic,
-      powerfulMagic("fire")
-    ) === "bought"
-  ) {
-    currentFireMagic++;
-  }
-}
-
-function buyWaterMagic() {
-  if (
-    buyWeapon(
-      currentWaterMagic,
-      waterMagic,
-      40 * (learntWaterMagic.length + 1),
-      learntWaterMagic,
-      purchasedMagic,
-      noMoneyMagic,
-      powerfulMagic("water")
-    ) === "bought"
-  ) {
-    currentWaterMagic++;
-  }
-}
-
-function buyEarthMagic() {
-  if (
-    buyWeapon(
-      currentEarthMagic,
-      earthMagic,
-      40 * (learntEarthMagic.length + 1),
-      learntEarthMagic,
-      purchasedMagic,
-      noMoneyMagic,
-      powerfulMagic("earth")
-    ) === "bought"
-  ) {
-    currentEarthMagic++;
-  }
-}
-
-function buyShield() {
-  if (
-    buyWeapon(
-      currentShield,
-      shields,
-      40 * (shieldInventory.length + 1),
-      shieldInventory,
-      purchasedShield,
-      noMoneyShield,
-      powerfulShield()
-    ) === "bought"
-  ) {
-    currentShield++;
-  }
-}
-
-function purchaseHpPotion() {
-  if (gold >= 10 * level) {
-    gold -= 10 * level;
-    goldText.innerText = gold;
-    hpPotions++;
-    text.innerText = `You purchased a hp potion, you now have ${hpPotions} hp potions.`;
-  } else {
-    text.innerText = `You do not have enough gold to buy a hp potion. Each potion costs ${
-      10 * level
-    } gold, you only have ${gold} gold.`;
-  }
-}
-
-function purchaseMpPotion() {
-  if (gold >= 10 * level) {
-    gold -= 10 * level;
-    goldText.innerText = gold;
-    mpPotions++;
-    text.innerText = `You purchased a mp potion, you now have ${mpPotions} mp potions.`;
-  } else {
-    text.innerText = `You do not have enough gold to buy a mp potion. Each potion costs ${
-      10 * level
-    } gold, you only have ${gold} gold.`;
-  }
+function purchaseMpPotion(_location, saveFile, setGameText) {
+  const potionType = "mp";
+  purchasePotion(saveFile, setGameText, potionType);
 }
 
 export {
