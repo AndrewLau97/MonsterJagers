@@ -69,6 +69,8 @@ function levelMp(setLocation, saveFile, setGameText) {
 }
 
 
+
+
 function handleLevelUp(setLocation, saveFile, setGameText, statLeveled, statLeveledText){
   saveFile.xp -= (100*saveFile.level);
   saveFile.level += 1;
@@ -80,4 +82,4 @@ function handleLevelUp(setLocation, saveFile, setGameText, statLeveled, statLeve
   setLocation(15)
 }
 
-export { levelUp, restAtInn, levelDef, levelMp, levelAtk };
+export { levelUp, restAtInn, levelDef, levelMp, levelAtk, healthAndManaFunction };

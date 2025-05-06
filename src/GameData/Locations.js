@@ -258,6 +258,13 @@ const locations = [
     "button text": ["Atk", "Def", "Mp", "Go Back"],
     "button functions": [levelAtk, levelDef, levelMp, restInn],
   },
+
+  {
+    //17
+    name: "Explore  outer reaches",
+    "button text":[],
+    "button functions":[]
+  }
 ];
 
 export default locations;
