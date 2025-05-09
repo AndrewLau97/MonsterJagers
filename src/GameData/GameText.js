@@ -163,6 +163,27 @@ function notEnoughMana() {
   return `You do not have enough mana to cast this spell, try something else.`;
 }
 
+function campOutsideText(timeRested){
+  if(timeRested===1){
+    return `You awaken beneath a canopy of stars fading by the light of dawn, the chill of the night is replaced by the warmth of the sunlight. The crackle of your campfire and the scent of the pine lingers in the air. You feel well-rested and ready for a new day.`
+  }else if(timeRested===0.5){
+    return `The wind howled through the trees all night, the damp chill clung to your cloak like a second skin. Sleep did not come easy for you, only in the form of restless fragments. You rise, groggy, sore and already longing for a warm hearth.`
+  }else if(timeRested===0.25){
+    return `Every rustle in the underbrush and distant howls kepy your eyes wide and your hand on your blade. By dawn, you managed only moments of sleeps, with your nerves frayed and mind foggy, you get up wanting the day to end once more.`
+  }
+}
+
+function wolvesAmbushText(){
+  return `A low growl pierced your uneasy sleep. With your eyes snapping open, you see a dark shapes dashing between the trees - wolves, their eyes gleaming from your campfire. You bolt up with your blade drawn as the beasts leap towards you. What would you like to do?`
+}
+
+function banditsAmbushText(){
+  return `The sharp twang of a bowstring jerks you awake, followed by a thud of an arrow burying itself inches from your face. Shadows move fast beyond the reach of your campfire - bandits. Steel flashes before you as you scramble to your feet. The leader comes forth.
+  Bandit Leader: Money or Death?
+  What would you like to do?`
+  
+}
+
 // to change all text into this object at a later date - too many things being exported
 
 const testText = {
@@ -356,4 +377,7 @@ export {
   noWeapon,
   notEnoughMana,
   testText,
+  campOutsideText,
+  wolvesAmbushText,
+  banditsAmbushText,
 };

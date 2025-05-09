@@ -8,11 +8,14 @@ import monsters from "./Monsters";
 import innBG from "../assets/Background_images/Inn.jpg";
 import outskirtsBG from "../assets/Background_images/Outskirts.jpg";
 import {
+  banditsAmbushText,
+  campOutsideText,
   defeatMonsterText,
   enterInnText,
   monsterEncounterText,
   rebirthText,
   testText,
+  wolvesAmbushText,
 } from "./GameText";
 import updateData from "./UpdateDataBase";
 import { healthAndManaFunction } from "./InnFn";
@@ -76,6 +79,12 @@ function goFight(setLocation, _saveFile, setGameText, monsterType, fighting) {
   const monsterHealth = monsters[monsterType][fighting].health;
   monsterName.innerText = monsters[monsterType][fighting].name;
   monsterHealthText.innerText = monsterHealth;
+  // button1.style.display = "float";
+  // button1.removeAttribute("disabled");
+  // button2.style.display = "float";
+  // button2.removeAttribute("disabled");
+  // button3.style.display = "block";
+  // button3.removeAttribute("disabled");
   button4.style.display = "block";
   button4.removeAttribute("disabled");
   setGameText(monsterEncounterText(monsters[monsterType][fighting].name));
@@ -89,18 +98,50 @@ function restInn(setLocation, _saveFile, setGameText) {
   background.style.backgroundImage = `url(${innBG})`;
   monsterStats.style.display = "none";
 }
-function campOutside() {
-  console.log("camp outside");
+function campOutside(setLocation, saveFile, setGameText) {
   //good nights rest - fully healed
   //bad weather causes you to sleep poorly heals 50%
   //hearing noise outside, you did not rest well, heals 25%
   //encounter a bandit - fight or pay off the bandit
   //pack of wolves - fight or run and take damage from running
+  const encounter = Math.random();
+  if (encounter < 0.25) {
+    campRestedAmount(setLocation, saveFile, setGameText, 1);
+    console.log("wellrested");
+  } else if (encounter < 0.5) {
+    campRestedAmount(setLocation, saveFile, setGameText, 0.5);
+    console.log("unwellrested");
+  } else if (encounter < 0.75) {
+    campRestedAmount(setLocation, saveFile, setGameText, 0.25);
+    console.log("barelyrested");
+  } else if (encounter < 0.875) {
+    encounterBandits(setLocation, saveFile, setGameText);
+    console.log("bandits");
+  } else {
+    encounterWolves(setLocation, saveFile, setGameText);
+    console.log("wolves");
+  }
 }
 
-function encounterBandits() {}
+function encounterBandits(setLocation, saveFile, setGameText) {
+  setLocation(17)
+  setGameText(banditsAmbushText());
+  monsterStats.style.display = "none";
+  button3.style.display = "none";
+  button3.setAttribute("disabled", "");
+  button4.style.display = "none";
+  button4.setAttribute("disabled", "");
+}
 
-function encounterWolves() {}
+function encounterWolves(setLocation, saveFile, setGameText) {
+  setLocation(17)
+  setGameText(wolvesAmbushText());
+  monsterStats.style.display = "none";
+  button1.style.display = "none";
+  button1.setAttribute("disabled", "");
+  button2.style.display = "none";
+  button2.setAttribute("disabled", "");
+}
 
 function campRestedAmount(setLocation, saveFile, setGameText, timeRested) {
   const [maxHealth, maxMana] = healthAndManaFunction(saveFile);
@@ -112,11 +153,13 @@ function campRestedAmount(setLocation, saveFile, setGameText, timeRested) {
   manaText.innerText = saveFile.mana;
   updateData(saveFile);
   setLocation(7);
+  monsterStats.style.display = "none";
+  background.style.backgroundImage = `url(${outskirtsBG})`;
+  setGameText(campOutsideText(timeRested));
 }
 
 function nextArea() {
   console.log("head to next area");
-  console.log(testText.purchase.purchasedMagic('test'))
 }
 function lose(setLocation, _saveFile, setGameText) {
   setLocation(13);
@@ -131,8 +174,8 @@ function defeatMonster(
   damageDealt
 ) {
   // const goldGain = Math.floor(monster.level * 4.2);
-  const goldGain = Math.floor(monster.level * (5.5 * Math.random() + 1));
-  const xpGain = Math.floor(monster.level * (3.5 * Math.random() + 1));
+  const goldGain = Math.floor(monster.level * 5 * (5.5 * Math.random() + 1));
+  const xpGain = Math.floor(monster.level * 5 * (3.5 * Math.random() + 1));
   setLocation(14);
   setGameText(defeatMonsterText(monster.name, goldGain, xpGain, damageDealt));
   saveFile.gold += goldGain;

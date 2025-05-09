@@ -36,9 +36,9 @@ function isCrit() {
   return Math.random() < 0.1;
 }
 
-function monstersAtk(level, shieldDefenceStats, defStats) {
+function monstersAtkDamage(power, shieldDefenceStats, defStats) {
   const hit =
-    level * 5 -
+    power * 5 -
     defStats ** 3 -
     (shieldDefenceStats > 0 ? shieldDefenceStats : 0);
   return hit > 0 ? hit : 1;
@@ -65,7 +65,11 @@ function monstersTurn(setLocation, saveFile, setGameText) {
       const shieldDefence = gameItems.shield.filter(
         (shield) => shield.name === inventory.shield[0]
       )[0].defence;
-      const damageTaken = monstersAtk(monster.level, shieldDefence, stats.def);
+      const damageTaken = monstersAtkDamage(
+        monster.power,
+        shieldDefence,
+        stats.def
+      );
       setGameText((prevGameText) => (prevGameText += takeDamage(damageTaken)));
 
       if (saveFile.health > damageTaken) {
@@ -90,9 +94,13 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
   const weaponUsed = gameItems[weaponType].filter(
     (weapon) => weapon.name === inventory[weaponType][0]
   );
-  const resistance = Object.keys(monster).find(
-    (key) => monster[key] === weaponUsed[0].attribute
-  );
+  const resistance = Object.keys(monster).find((key) => {
+    if (Array.isArray(monster[key])) {
+      // console.log(monster[key].includes(weaponUsed[0].attribute));
+      return monster[key].includes(weaponUsed[0].attribute);
+    }
+    return monster[key] === weaponUsed[0].attribute;
+  });
   const damageCalculation = {
     resistant: 0.5,
     weakness: 1.5,
@@ -131,16 +139,6 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
   }
 }
 
-function testPlayersTurn(
-  setLocation,
-  saveFile,
-  setGameText,
-  monster,
-  weaponType
-) {
-  sortActions(setLocation, saveFile, setGameText, monster, weaponType);
-}
-
 function reduceMana(manaNeeded, saveFile) {
   manaText.innerText -= manaNeeded;
   saveFile.mana -= manaNeeded;
@@ -175,16 +173,8 @@ function sortActions(setLocation, saveFile, setGameText, weaponType) {
 }
 
 function useNormalWeapon(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "standardWeapon";
-  // monsterAttacks();
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  // testPlayersTurn(setLocation, saveFile, setGameText, monster, weaponType);
 }
 
 function checkOwned(saveFile, type, setGameText) {
@@ -208,50 +198,17 @@ function useElementalWeapon(setLocation, _saveFile, setGameText) {
 }
 
 function useFireWeapon(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "fireWeapon";
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // if (checkOwned(saveFile, weaponType, setGameText)) {
-  //   monsterAttacks();
-  //   if (saveFile.health > 0) {
-  //     playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //   }
-  // }
 }
 
 function useWaterWeapon(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "waterWeapon";
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // if (checkOwned(saveFile, weaponType, setGameText)) {
-  //   monsterAttacks();
-  //   if (saveFile.health > 0) {
-  //     playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //   }
-  // }
 }
 function useEarthWeapon(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "earthWeapon";
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // if (checkOwned(saveFile, weaponType, setGameText)) {
-  //   monsterAttacks();
-  //   if (saveFile.health > 0) {
-  //     playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //   }
-  // }
 }
 
 function goAttack(setLocation, _saveFile, setGameText) {
@@ -263,7 +220,8 @@ function goAttack(setLocation, _saveFile, setGameText) {
 
 function goFightButtons(setLocation, _saveFile, setGameText) {
   setLocation(8);
-  (button4.style.display = "block"), button4.removeAttribute("disabled");
+  button4.style.display = "block";
+  button4.removeAttribute("disabled");
   if (setGameText) {
     setGameText(goBackToFightText());
   }
@@ -277,52 +235,17 @@ function useMagic(setLocation, _saveFile, setGameText) {
 }
 
 function useFireMagic(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "fireMagic";
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // console.log(checkEnoughMana(saveFile, weaponType));
-  // if (checkOwned(saveFile, weaponType, setGameText)) {
-  //   monsterAttacks();
-  //   if (saveFile.health > 0) {
-  //     playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //     testPlayersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //   }
-  // }
 }
 
 function useWaterMagic(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "waterMagic";
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // if (checkOwned(saveFile, weaponType, setGameText)) {
-  //   monsterAttacks();
-  //   if (saveFile.health > 0) {
-  //     playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //   }
-  // }
 }
 function useEarthMagic(setLocation, saveFile, setGameText) {
-  // const { monster, monsterAttacks } = monstersTurn(
-  //   setLocation,
-  //   saveFile,
-  //   setGameText
-  // );
   const weaponType = "earthMagic";
   sortActions(setLocation, saveFile, setGameText, weaponType);
-  // if (checkOwned(saveFile, weaponType, setGameText)) {
-  //   monsterAttacks();
-  //   if (saveFile.health > 0) {
-  //     playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
-  //   }
-  // }
 }
 
 function useItems(setLocation, _saveFile, setGameText) {
@@ -347,13 +270,8 @@ function usePotion(setLocation, saveFile, type, maxAmount) {
 function useHpPotion(setLocation, saveFile, setGameText) {
   if (saveFile.potions.hp > 0) {
     const maxHealth = 100 + (saveFile.stats.hp - 1) * 10;
-    // const restoredHealth = calcRestoredAmount("health", maxHealth, saveFile);
     if (saveFile.health < maxHealth) {
       usePotion(setLocation, saveFile, "health", maxHealth);
-      // setLocation(8);
-      // healthText.innerText = restoredHealth;
-      // saveFile.health = restoredHealth;
-      // updateData(saveFile);
       setGameText(useHealthPotionText() + goBackToFightText());
     } else {
       setGameText(hpMaxAlreadyText());
@@ -366,13 +284,8 @@ function useHpPotion(setLocation, saveFile, setGameText) {
 function useMpPotion(setLocation, saveFile, setGameText) {
   if (saveFile.potions.mp > 0) {
     const maxMana = 50 + (saveFile.stats.mp - 1) * 10;
-    // const restoredMana = calcRestoredAmount("mana", maxMana, saveFile);
     if (saveFile.mana < maxMana) {
       usePotion(setLocation, saveFile, "mana", maxMana);
-      // setLocation(8);
-      // manaText.innerText = restoredMana;
-      // saveFile.mana = restoredMana;
-      // updateData(saveFile)
       setGameText(useManaPotionText() + goBackToFightText());
     } else {
       setGameText(mpMaxAlreadyText());

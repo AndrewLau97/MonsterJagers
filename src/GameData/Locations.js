@@ -30,7 +30,7 @@ import {
   purchaseMpPotion,
 } from "./PurchaseFn";
 
-import { fightSlime, fightWizard, fightElemental } from "./SelectMonstersFn";
+import { fightSlime, fightWizard, fightElemental, fightBandits, fightWolves } from "./SelectMonstersFn";
 
 import {
   useNormalWeapon,
@@ -261,9 +261,9 @@ const locations = [
 
   {
     //17
-    name: "Explore  outer reaches",
-    "button text":[],
-    "button functions":[]
+    name: "Ambush",
+    "button text":["Fight off bandits", "Pay off the bandits", "Attack the wolves", "Run away"],
+    "button functions":[fightBandits, dummyFunction, fightWolves, dummyFunction]
   }
 ];
 
