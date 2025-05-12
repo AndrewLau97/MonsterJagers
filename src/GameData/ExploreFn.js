@@ -174,8 +174,8 @@ function defeatMonster(
   damageDealt
 ) {
   // const goldGain = Math.floor(monster.level * 4.2);
-  const goldGain = Math.floor(monster.level * 5 * (5.5 * Math.random() + 1));
-  const xpGain = Math.floor(monster.level * 5 * (3.5 * Math.random() + 1));
+  const goldGain = Math.floor(monster.level + 4 * (5.5 * Math.random() + 1));
+  const xpGain = Math.floor(monster.level + 4 * (3.5 * Math.random() + 1));
   setLocation(14);
   setGameText(defeatMonsterText(monster.name, goldGain, xpGain, damageDealt));
   saveFile.gold += goldGain;

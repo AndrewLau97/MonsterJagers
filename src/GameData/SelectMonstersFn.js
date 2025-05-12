@@ -1,6 +1,6 @@
 import slimeBG from "../assets/Background_images/SlimeHabitat.jpg"
 import wizardTowerBG from "../assets/Background_images/WizardsTower.jpg"
-import elementalPlainBG from "../assets/Background_images/ElementalPlain.jpg"
+import elementalPlaneBG from "../assets/Background_images/ElementalPlane.jpg"
 import { goFight } from "./ExploreFn";
 
 function fightSlime(setLocation, saveFile, setGameText) {
@@ -14,7 +14,7 @@ function fightWizard(setLocation, saveFile, setGameText) {
   selectMonster(setLocation, saveFile, setGameText, monsterType,3)
 }
 function fightElemental(setLocation, saveFile, setGameText) {
-  background.style.backgroundImage = `url(${elementalPlainBG})`;
+  background.style.backgroundImage = `url(${elementalPlaneBG})`;
   const monsterType='elementals'
   selectMonster(setLocation, saveFile, setGameText, monsterType,3)
 }
