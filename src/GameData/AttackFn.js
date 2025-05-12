@@ -108,7 +108,7 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
     immune: 0,
   };
   let damageDealt = Math.floor(
-    (weaponUsed[0].power + stats.atk ** 3) * damageCalculation[resistance]
+    (weaponUsed[0].power + stats.atk * 3) * damageCalculation[resistance]
   );
   const monsterHealth = monsterHealthText.innerText;
 
