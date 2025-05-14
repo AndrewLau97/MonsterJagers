@@ -163,25 +163,41 @@ function notEnoughMana() {
   return `You do not have enough mana to cast this spell, try something else.`;
 }
 
-function campOutsideText(timeRested){
-  if(timeRested===1){
-    return `You awaken beneath a canopy of stars fading by the light of dawn, the chill of the night is replaced by the warmth of the sunlight. The crackle of your campfire and the scent of the pine lingers in the air. You feel well-rested and ready for a new day.`
-  }else if(timeRested===0.5){
-    return `The wind howled through the trees all night, the damp chill clung to your cloak like a second skin. Sleep did not come easy for you, only in the form of restless fragments. You rise, groggy, sore and already longing for a warm hearth.`
-  }else if(timeRested===0.25){
-    return `Every rustle in the underbrush and distant howls kepy your eyes wide and your hand on your blade. By dawn, you managed only moments of sleeps, with your nerves frayed and mind foggy, you get up wanting the day to end once more.`
+function campOutsideText(timeRested) {
+  if (timeRested === 1) {
+    return `You awaken beneath a canopy of stars fading by the light of dawn, the chill of the night is replaced by the warmth of the sunlight. The crackle of your campfire and the scent of the pine lingers in the air. You feel well-rested and ready for a new day.`;
+  } else if (timeRested === 0.5) {
+    return `The wind howled through the trees all night, the damp chill clung to your cloak like a second skin. Sleep did not come easy for you, only in the form of restless fragments. You rise, groggy, sore and already longing for a warm hearth.`;
+  } else if (timeRested === 0.25) {
+    return `Every rustle in the underbrush and distant howls kepy your eyes wide and your hand on your blade. By dawn, you managed only moments of sleeps, with your nerves frayed and mind foggy, you get up wanting the day to end once more.`;
   }
 }
 
-function wolvesAmbushText(){
-  return `A low growl pierced your uneasy sleep. With your eyes snapping open, you see a dark shapes dashing between the trees - wolves, their eyes gleaming from your campfire. You bolt up with your blade drawn as the beasts leap towards you. What would you like to do?`
+function wolvesAmbushText() {
+  return `A low growl pierced your uneasy sleep. With your eyes snapping open, you see a dark shapes dashing between the trees - wolves, their eyes gleaming from your campfire. You bolt up with your blade drawn as the beasts leap towards you. What would you like to do?`;
 }
 
-function banditsAmbushText(){
+function banditsAmbushText() {
   return `The sharp twang of a bowstring jerks you awake, followed by a thud of an arrow burying itself inches from your face. Shadows move fast beyond the reach of your campfire - bandits. Steel flashes before you as you scramble to your feet. The leader comes forth.
   Bandit Leader: Money or Death?
-  What would you like to do?`
-  
+  What would you like to do?`;
+}
+
+function payOffBanditsText() {
+  return `You paid off the bandits—scum who prey on the weak.
+The moment replays in your mind: the weight of the coin in your hands, the silence that followed.
+You chose survival. Not everyone gets that choice… or lives to make it again.
+Now, back in town, the dust still clinging to your boots—
+What would you like to do next?`;
+}
+
+function escapeFromWolvesText() {
+  return `The bustling market streets replace the sounds of the forest—the snapping branches, the growls of wolves at your heels.
+They almost had you.
+You check yourself: a few scrapes, a torn sleeve, and your coin pouch feels lighter than before.
+But you’re safe now.
+You exhale, steadying your breath.
+What would you like to do next?`;
 }
 
 // to change all text into this object at a later date - too many things being exported
@@ -191,10 +207,10 @@ const testText = {
     purchasedWeapon: (newWeapon) => {
       return `You purchased a ${newWeapon}.`;
     },
-    noMoneyWeapon:(need, own)=> {
+    noMoneyWeapon: (need, own) => {
       return `You do not have enough gold to buy this weapon. You require ${need} gold, you only have ${own} gold!`;
     },
-    powerfulWeapon:(type)=> {
+    powerfulWeapon: (type) => {
       if (type) {
         return `You already have the most powerful ${type} weapon!`;
       } else {
@@ -204,133 +220,135 @@ const testText = {
     purchasedMagic: (newMagic) => {
       return `You have now learnt ${newMagic}.`;
     },
-    noMoneyMagic:(need, own) => {
+    noMoneyMagic: (need, own) => {
       return `You do not have enough gold to learn this magic. You require ${need} gold, you only have ${own} gold!`;
     },
-    powerfulMagic:(type) =>{
+    powerfulMagic: (type) => {
       return `You already know the most powerful ${type} spell,you have nothing left to learn. Well done.`;
     },
     purchasedShield: (shield) => {
       return `You purchased ${shield}.`;
     },
-    noMoneyShield:(need, own) => {
+    noMoneyShield: (need, own) => {
       return `You do not have enough gold to buy this shield. You require ${need} gold, you only have ${own} gold!`;
     },
-    powerfulShield:() => {
+    powerfulShield: () => {
       return "You already have the best shield!";
     },
-    buyPotion:(type, amount) => {
+    buyPotion: (type, amount) => {
       return `You purchased a ${type} potion, you now have ${amount} ${type} potions.`;
     },
-    noMoneyPotion:(cost, gold, type) => {
+    noMoneyPotion: (cost, gold, type) => {
       return `You do not have enough gold to buy a ${type} potion. Each potion costs ${cost} gold, you only have ${gold} gold.`;
     },
   },
   encounters: {
-    monsterEncounterText:(monsterName) => {
+    monsterEncounterText: (monsterName) => {
       return `You encounter a ${monsterName}. What would you like to do?`;
     },
-    monsterAttacksText:(monsterName) => {
+    monsterAttacksText: (monsterName) => {
       return ` The ${monsterName} attacks you.`;
     },
-    takeDamage:(damage) => {
+    takeDamage: (damage) => {
       return ` You have taken ${damage} damage.`;
     },
-    dodgeAttack:() => {
+    dodgeAttack: () => {
       return " You managed to dodge the attack, you take no damage.";
     },
-    attackMonster:(monsterName, weapon) => {
+    attackMonster: (monsterName, weapon) => {
       return ` You attack the ${monsterName} with your ${weapon}.`;
     },
-    dealDamage:(resistance, damage) => {
+    dealDamage: (resistance, damage) => {
       const resistanceText = {
-        immune: " The monster is immune to your attack, try another element type.",
+        immune:
+          " The monster is immune to your attack, try another element type.",
         resistant: ` The monster is resistant to your attack, you only deal ${damage} damage. Try another element type.`,
         weakness: ` The monster is weak to your attack, you deal ${damage} damage!`,
         neutral: ` You deal ${damage} damage.`,
       };
       return resistanceText[resistance];
     },
-    monsterDodgesText:(monsterName) => {
+    monsterDodgesText: (monsterName) => {
       return ` The ${monsterName} dodges your attack.`;
     },
-    meleeWeapon:() => {
+    meleeWeapon: () => {
       return `Which weapon would you like to use?`;
     },
-    chooseWeaponElement:() => {
+    chooseWeaponElement: () => {
       return `Which elemental weapon would you like to use?`;
     },
-    noWeapon:() => {
+    noWeapon: () => {
       return `You do not own a weapon of this category, try another weapon.`;
     },
-    chooseMagicElement:() => {
+    chooseMagicElement: () => {
       return `Which magic type would you like to cast?`;
     },
-    noMagic:()=> {
+    noMagic: () => {
       return `You do not know any magic of this element, try something else.`;
     },
-    notEnoughMana:() => {
+    notEnoughMana: () => {
       return `You do not have enough mana to cast this spell, try something else.`;
     },
-    goBackToFightText:() => {
+    goBackToFightText: () => {
       return ` What would you like to do now?`;
     },
-    itemToUseText:() => {
+    itemToUseText: () => {
       return `What item would you like to use?`;
     },
-    hpMaxAlreadyText:() => {
+    hpMaxAlreadyText: () => {
       return `You feel healthy and do not require a potion.`;
     },
-    useHealthPotionText:() => {
+    useHealthPotionText: () => {
       return `The bitter liquid goes down in one gulp. A soothing energy pulses through you—your health is restored.`;
     },
-    mpMaxAlreadyText:() => {
+    mpMaxAlreadyText: () => {
       return `You feel full of arcane energy and do no require a potion.`;
     },
-    useManaPotionText:() => {
+    useManaPotionText: () => {
       return `Arcane energy courses through your veins as the potion takes effect. Your mind clears, and your mana returns.`;
     },
-    noPotions:(type) => {
+    noPotions: (type) => {
       return `You do not have any ${type} potions to use.`;
     },
-    defeatMonsterText:(monsterName, gold, xp, damageDealt) => {
+    defeatMonsterText: (monsterName, gold, xp, damageDealt) => {
       return `You deal ${damageDealt} which finishes the ${monsterName}. You gain ${gold} gold and ${xp} xp, where would you like to go?`;
-    }
+    },
   },
-  rest: {enterInnText:() => {
-    return `You enter the Hearth and Hammer Inn, what would you like to do?`;
+  rest: {
+    enterInnText: () => {
+      return `You enter the Hearth and Hammer Inn, what would you like to do?`;
+    },
+    noMoneyInnText: () => {
+      return `You do not have enough money to rest here. You might want to try camping outside to heal up, but be wary of danger.`;
+    },
+    innRestText: () => {
+      return `You feel rejuvenated from resting. What would you like to do now?`;
+    },
+    noNeedInnRestText: () => {
+      return `You feel completely energized. There is no need to rest.`;
+    },
+    levelUpText: () => {
+      return `What would you like to level up?`;
+    },
+    noLevelUpText: (xpNeededToLevel) => {
+      return `You do not have enough xp to level up, ${xpNeededToLevel} xp needed to level up.`;
+    },
+    levelUpDefText: () => {
+      return `Your body grows more resilient, energy surging through you allowing you to take on tougher foes.`;
+    },
+    levelUpMpText: () => {
+      return `You feel yourself filling up with arcane energy, allowing yourself to command more magical forces than before.`;
+    },
+    levelUpAtkText: () => {
+      return `A surge of strength wells up from within, you feel like you can take on anything.`;
+    },
+    wellRestedOutsideText: () => {},
+    restedOutsideText: () => {},
+    notWellRestedOutsideText: () => {},
   },
-  noMoneyInnText:() => {
-    return `You do not have enough money to rest here. You might want to try camping outside to heal up, but be wary of danger.`;
-  },
-  innRestText:() => {
-    return `You feel rejuvenated from resting. What would you like to do now?`;
-  },
-  noNeedInnRestText:() => {
-    return `You feel completely energized. There is no need to rest.`;
-  },
-  levelUpText:() => {
-    return `What would you like to level up?`;
-  },
-  noLevelUpText:(xpNeededToLevel) => {
-    return `You do not have enough xp to level up, ${xpNeededToLevel} xp needed to level up.`;
-  },
-  levelUpDefText:() => {
-    return `Your body grows more resilient, energy surging through you allowing you to take on tougher foes.`;
-  },
-  levelUpMpText:() => {
-    return `You feel yourself filling up with arcane energy, allowing yourself to command more magical forces than before.`;
-  },
-  levelUpAtkText:() => {
-    return `A surge of strength wells up from within, you feel like you can take on anything.`;
-  },
-  wellRestedOutsideText:()=>{},
-  restedOutsideText:()=>{},
-  notWellRestedOutsideText:()=>{},
-},
-  rebirthText:() => {
+  rebirthText: () => {
     return `You wake up from a strange dream. A sense of deja vu overcomes you as you walk into this town.`;
-  }
+  },
 };
 
 export {
@@ -380,4 +398,6 @@ export {
   campOutsideText,
   wolvesAmbushText,
   banditsAmbushText,
+  payOffBanditsText,
+  escapeFromWolvesText
 };

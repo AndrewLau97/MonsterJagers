@@ -14,6 +14,8 @@ import {
   buyItems,
   nextArea,
   restart,
+  payOffBandits,
+  escapeWolves,
   // lose
 } from "./ExploreFn";
 
@@ -263,7 +265,7 @@ const locations = [
     //17
     name: "Ambush",
     "button text":["Fight off bandits", "Pay off the bandits", "Attack the wolves", "Run away"],
-    "button functions":[fightBandits, dummyFunction, fightWolves, dummyFunction]
+    "button functions":[fightBandits, payOffBandits, fightWolves, escapeWolves]
   }
 ];
 

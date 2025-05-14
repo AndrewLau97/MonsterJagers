@@ -12,7 +12,9 @@ import {
   campOutsideText,
   defeatMonsterText,
   enterInnText,
+  escapeFromWolvesText,
   monsterEncounterText,
+  payOffBanditsText,
   rebirthText,
   testText,
   wolvesAmbushText,
@@ -34,7 +36,7 @@ function goTown(setLocation, _saveFile, setGameText) {
 function shop(setLocation, _saveFile, setGameText) {
   setLocation(1);
   setGameText("Shopkeeper: What would you like to buy?");
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
   background.style.backgroundImage = `url(${shopBG})`;
 }
@@ -64,7 +66,7 @@ function buyItems(setLocation, _saveFile, setGameText) {
 function explore(setLocation, _saveFile, setGameText) {
   setLocation(6);
   setGameText("Where would you like to go?");
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
 }
 function goHunt(setLocation, _saveFile, setGameText) {
@@ -75,17 +77,17 @@ function goHunt(setLocation, _saveFile, setGameText) {
 }
 function goFight(setLocation, _saveFile, setGameText, monsterType, fighting) {
   setLocation(8);
-  monsterStats.style.display = "block";
+  monsterStats.style.display = "inline";
   const monsterHealth = monsters[monsterType][fighting].health;
   monsterName.innerText = monsters[monsterType][fighting].name;
   monsterHealthText.innerText = monsterHealth;
-  // button1.style.display = "float";
-  // button1.removeAttribute("disabled");
-  // button2.style.display = "float";
-  // button2.removeAttribute("disabled");
-  // button3.style.display = "block";
-  // button3.removeAttribute("disabled");
-  button4.style.display = "block";
+  button1.style.display = "inline";
+  button1.removeAttribute("disabled");
+  button2.style.display = "inline";
+  button2.removeAttribute("disabled");
+  button3.style.display = "inline";
+  button3.removeAttribute("disabled");
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
   setGameText(monsterEncounterText(monsters[monsterType][fighting].name));
 }
@@ -133,6 +135,45 @@ function encounterBandits(setLocation, saveFile, setGameText) {
   button4.setAttribute("disabled", "");
 }
 
+function payOffBandits(setLocation,saveFile,setGameText){
+  setLocation(0);
+  setGameText(payOffBanditsText())
+  escapeFromCamp(saveFile,"bandits")
+  background.style.backgroundImage = `url(${VillageOneBG})`;
+}
+
+function escapeWolves(setLocation,saveFile,setGameText){
+  setLocation(0);
+  setGameText(escapeFromWolvesText())
+  escapeFromCamp(saveFile,"wolves")
+  background.style.backgroundImage = `url(${VillageOneBG})`;
+}
+
+function escapeFromCamp(saveFile,type){
+  let lostMultiplier;
+  if(type==="wolves"){
+    const lostHealth=Math.floor(saveFile.health*Math.random())
+    saveFile.health-=lostHealth;
+    lostMultiplier=2
+  }else{type==="bandits"}{
+    lostMultiplier=1
+  }
+  const lostCoin=Math.floor(saveFile.gold *(Math.random()/lostMultiplier));
+  saveFile.gold-=lostCoin;
+  updateData(saveFile);
+  goldText.innerText=saveFile.gold;
+  healthText.innerText=saveFile.health
+  button1.style.display = "inline";
+  button1.removeAttribute("disabled");
+  button2.style.display = "inline";
+  button2.removeAttribute("disabled");
+  button3.style.display = "inline";
+  button3.removeAttribute("disabled");
+  button4.style.display = "inline";
+  button4.removeAttribute("disabled");
+}
+
+
 function encounterWolves(setLocation, saveFile, setGameText) {
   setLocation(17)
   setGameText(wolvesAmbushText());
@@ -149,10 +190,10 @@ function campRestedAmount(setLocation, saveFile, setGameText, timeRested) {
   const missingMana = maxMana - saveFile.mana;
   saveFile.health += Math.floor(missingHealth * timeRested);
   saveFile.mana += Math.floor(missingMana * timeRested);
-  healthText.innerText = saveFile.health;
-  manaText.innerText = saveFile.mana;
   updateData(saveFile);
   setLocation(7);
+  healthText.innerText = saveFile.health;
+  manaText.innerText = saveFile.mana;
   monsterStats.style.display = "none";
   background.style.backgroundImage = `url(${outskirtsBG})`;
   setGameText(campOutsideText(timeRested));
@@ -183,7 +224,7 @@ function defeatMonster(
   updateData(saveFile);
   goldText.innerText = saveFile.gold;
   xpText.innerText = saveFile.xp;
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
 }
 
@@ -245,4 +286,6 @@ export {
   restart,
   lose,
   defeatMonster,
+  payOffBandits,
+  escapeWolves
 };

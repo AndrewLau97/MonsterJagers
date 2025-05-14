@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Play from './Pages/Play'
 import supabase from './config/supabaseClient'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
+import TestPlay from './Pages/TestPlay'
 
 function App() {
   const [session, setSession]=useState(null)
@@ -57,7 +56,10 @@ function App() {
               },
             }}
             />
-          </div>:<Play/>}
+          </div>:
+          // <Play/>
+          <TestPlay/>
+        }
           >
           </Route>
         </Routes>
