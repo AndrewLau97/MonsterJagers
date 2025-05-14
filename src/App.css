@@ -11,6 +11,7 @@ body {
   background-size: cover;
   background-position: center;
 }
+/* 
 
 .logo {
   height: 6em;
@@ -47,14 +48,16 @@ body {
 .read-the-docs {
   color: #888;
 }
-
+*/
 #game {
-  max-width: 500px;
-  max-height: 400px;
+  max-width: 600px;
+  /* max-width: 500px; */
+  /* max-height: 400px; */
   background-color: rgba(255,255,255,0.8);
   color: #ffffff;
   margin: 30px auto 0px;
   padding: 10px;
+  border-radius: 5px;
 }
 
 #controls {
@@ -89,27 +92,61 @@ body {
 button {
   cursor: pointer;
   color: #0a0a23;
-  background-color: #feac32;
+  /* background-color: #feac32; */
   background-image: linear-gradient(#fecc4c, #ffac33);
   border: 3px solid #feac32;
   margin: 3px;
-  width: 225px;
   border-radius: 5px;
   text-align: center;
   white-space: normal;
   word-wrap: break-word;
+  width: 250px;
+  height: 70px;
+  vertical-align: middle;
 }
 
+#button1 {
+  text-wrap: balance;
+  border-radius: 10px;
+  margin: 10px;
+}
 #button2 {
+  text-wrap: balance;
+  border-radius: 10px;
+  margin: 10px;
+}
+#button3 {
+  text-wrap: balance;
+  border-radius: 10px;
+  margin: 10px;
+}
+#button4 {
+  text-wrap: balance;
+  margin: 10px;
+  border-radius: 10px;
+  display:none
+}
+
+
+/* #button2 {
   float: right;
 }
 
 #button4 {
   float: right;
   display: none;
-}
+} */
 
 #login{
   background-color: white;
   width: 500px;
+} 
+
+span{
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+span.fade{
+  opacity: 1;
 }

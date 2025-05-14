@@ -1,4 +1,5 @@
 import locations from "../GameData/Locations";
+import { scrollText } from "../GameFn/textDisplayFn";
 import supabase from "../config/supabaseClient";
 
 import { useEffect, useState } from "react";
@@ -9,7 +10,24 @@ const Play = () => {
   const [health, setHealth] = useState(100);
   const [gold, setGold] = useState(50);
   const [saveFile, setSaveFile] = useState(null);
-  const [gameText,setGameText]=useState("")
+  const [gameText,setGameText]=useState("Welcome to my first game")
+
+//key press event to be added later after sorting bugs
+// const keyPress = (event) => {
+//     if (event.key === "1" && !button1.hasAttribute("disabled")) {
+//       handleBtnClick(0)
+//       // handleBtn1();
+//     } else if (event.key === "2" && !button2.hasAttribute("disabled")) {
+//       handleBtnClick(1)
+//       // handleBtn2();
+//     } else if (event.key === "3" && !button3.hasAttribute("disabled")) {
+//       handleBtnClick(2)
+//       // handleBtn3();
+//     } else if (event.key === "4" && !button4.hasAttribute("disabled")) {
+//       handleBtnClick(3)
+//       // handleBtn4();
+//     }
+//   };
 
   useEffect(() => {
     const getData = async () => {
@@ -17,40 +35,61 @@ const Play = () => {
         data: { user },
       } = await supabase.auth.getUser();
       const { data } = await supabase
-        .from("users")
-        .select("saveData")
-        .eq("id", user.id);
+      .from("users")
+      .select("saveData")
+      .eq("id", user.id);
       setSaveFile(data[0].saveData);
     };
     getData();
     supabase
-      .channel("users")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "users",
-        },
-        (_payload) => {
-          getData();
-        }
-      )
-      .subscribe();
+    .channel("users")
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "users",
+      },
+      (_payload) => {
+        getData();
+      }
+    )
+    .subscribe();
+    
   }, []);
+  scrollText(gameText)
+  
+    // key press event to be added later after sorting bugs
+    // console.log(button1)
+    // document.addEventListener("keydown", keyPress);
+  // return function () {
+  //   document.removeEventListener("keydown", keyPress);
+  // };
 
-  const handleBtn1 = () => {
-    locations[locationInfo]["button functions"][0](setLocationInfo, saveFile, setGameText);
-  };
-  const handleBtn2 = () => {
-    locations[locationInfo]["button functions"][1](setLocationInfo, saveFile, setGameText);
-  };
-  const handleBtn3 = () => {
-    locations[locationInfo]["button functions"][2](setLocationInfo, saveFile, setGameText);
-  };
-  const handleBtn4 = () => {
-    locations[locationInfo]["button functions"][3](setLocationInfo, saveFile, setGameText);
-  };
+  const handleBtnClick=(e)=>{
+    const button=Number(e.target.id.replace("button", ""))-1
+    if(locationInfo!==null){
+      locations[locationInfo]["button functions"][button](setLocationInfo, saveFile, setGameText)
+    }else{
+      locations[0]["button functions"][button](setLocationInfo,saveFile, setGameText)
+    }
+  }
+
+  // const handleBtn1 = () => {
+  //   locations[locationInfo]["button functions"][0](setLocationInfo, saveFile, setGameText);
+  // };
+  // const handleBtn2 = () => {
+  //   // console.log(locationInfo)
+  //   locations[locationInfo]["button functions"][1](setLocationInfo, saveFile, setGameText);
+  // };
+  // const handleBtn3 = () => {
+  //   // console.log(locationInfo)
+  //   locations[locationInfo]["button functions"][2](setLocationInfo, saveFile, setGameText);
+  // };
+  // const handleBtn4 = () => {
+  //   // console.log(locationInfo)
+  //   locations[locationInfo]["button functions"][3](setLocationInfo, saveFile, setGameText);
+  // };
   return (
     <>
       {!saveFile ? (
@@ -58,81 +97,77 @@ const Play = () => {
       ) : (
         <div id="game">
           <div id="stats">
-            <span className="stat">
-              XP: <span id="xpText">{saveFile.xp}</span>
+            <span className="stat fade">
+              XP: <span id="xpText" className="fade">{saveFile.xp}</span>
             </span>
-            <span className="stat">
-              Health: <span id="healthText">{saveFile.health}</span>
+            <span className="stat fade">
+              Health: <span id="healthText" className="fade">{saveFile.health}</span>
             </span>
-            <span className="stat">
-              Mana: <span id="manaText">{saveFile.mana}</span>
+            <span className="stat fade">
+              Mana: <span id="manaText" className="fade">{saveFile.mana}</span>
             </span>
-            <span className="stat">
-              Gold: <span id="goldText">{saveFile.gold}</span>
+            <span className="stat fade">
+              Gold: <span id="goldText" className="fade">{saveFile.gold}</span>
             </span>
           </div>
           {locationInfo !== null ? (
             <>
               <div id="controls">
-                <button id="button1" onClick={handleBtn1}>
+                <button id="button1" onClick={handleBtnClick}>
                   {locations[locationInfo]["button text"][0]}
                 </button>
-                <button id="button2" onClick={handleBtn2}>
+                <button id="button2" onClick={handleBtnClick}>
                   {locations[locationInfo]["button text"][1]}
                 </button>
-                <button id="button3" onClick={handleBtn3}>
+                <button id="button3" onClick={handleBtnClick}>
                   {locations[locationInfo]["button text"][2]}
                 </button>
                 {locations[locationInfo]["button text"][3] ? (
-                  <button id="button4" onClick={handleBtn4}>
+                  <button id="button4" onClick={handleBtnClick}>
                     {locations[locationInfo]["button text"][3]}
                   </button>
                 ) : (
-                  <button id="button4" onClick={handleBtn4} disabled>
+                  <button id="button4" onClick={handleBtnClick} disabled>
                     {locations[locationInfo]["button text"][3]}
                   </button>
                 )}
               </div>
               <div id="monsterStats">
-                <span className="stat">
+                <span className="stat fade">
                   Monster Name:{" "}
                   <strong>
-                    <span id="monsterName"></span>
+                    <span id="monsterName" className="fade"></span>
                   </strong>
                 </span>
-                <span className="stat">
+                <span className="stat fade">
                   Health:{" "}
                   <strong>
-                    <span id="monsterHealthText"></span>
+                    <span id="monsterHealthText" className="fade"></span>
                   </strong>
                 </span>
               </div>
-              <div id="text">{gameText}</div>
+              <div id="text">
+                {/* {gameText} */}
+                </div>
             </>
           ) : (
             <>
               <div id="controls">
                 <button
                   id="button1"
-                  onClick={() => {
-                    locations[0]["button functions"][0](setLocationInfo,saveFile, setGameText);
-                  }}
+                  onClick={handleBtnClick}
                 >
                   Shop
                 </button>
                 <button
                   id="button2"
-                  onClick={() => {
-                    locations[0]["button functions"][1](setLocationInfo, saveFile, setGameText);
-                  }}
+                  onClick={handleBtnClick}
                 >
                   Walk through town
                 </button>
                 <button
                   id="button3"
-                  onClick={() => {
-                    locations[0]["button functions"][2](setLocationInfo, saveFile, setGameText);
-                  }}
+                  onClick={handleBtnClick}
                 >
                   Continue onwards to town2 name undecided
                 </button>
@@ -154,7 +189,9 @@ const Play = () => {
                   </strong>
                 </span>
               </div>
-              <div id="text">Welcome to my first game</div>
+              <div id="text">
+                {/* Welcome to my first game */}
+                </div>
             </>
           )}
         </div>

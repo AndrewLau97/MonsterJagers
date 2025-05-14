@@ -96,7 +96,6 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
   );
   const resistance = Object.keys(monster).find((key) => {
     if (Array.isArray(monster[key])) {
-      // console.log(monster[key].includes(weaponUsed[0].attribute));
       return monster[key].includes(weaponUsed[0].attribute);
     }
     return monster[key] === weaponUsed[0].attribute;
@@ -192,7 +191,7 @@ function checkOwned(saveFile, type, setGameText) {
 
 function useElementalWeapon(setLocation, _saveFile, setGameText) {
   setLocation(10);
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
   setGameText(chooseWeaponElement());
 }
@@ -220,7 +219,7 @@ function goAttack(setLocation, _saveFile, setGameText) {
 
 function goFightButtons(setLocation, _saveFile, setGameText) {
   setLocation(8);
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
   if (setGameText) {
     setGameText(goBackToFightText());
@@ -229,7 +228,7 @@ function goFightButtons(setLocation, _saveFile, setGameText) {
 
 function useMagic(setLocation, _saveFile, setGameText) {
   setLocation(11);
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
   setGameText(chooseMagicElement());
 }
@@ -258,7 +257,7 @@ function useItems(setLocation, _saveFile, setGameText) {
 function usePotion(setLocation, saveFile, type, maxAmount) {
   const restoredAmount = calcRestoredAmount(type, maxAmount, saveFile);
   setLocation(8);
-  button4.style.display = "block";
+  button4.style.display = "inline";
   button4.removeAttribute("disabled");
   type === "health"
     ? (healthText.innerText = restoredAmount)
