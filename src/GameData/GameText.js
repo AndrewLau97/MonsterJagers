@@ -200,7 +200,33 @@ You exhale, steadying your breath.
 What would you like to do next?`;
 }
 
-// to change all text into this object at a later date - too many things being exported
+function findChestText(){
+  return `You venture off into the forests, your boots crunching over fallen leaves. A glimmer catches your eye - a weathered wooden chest nested inside the trunk of a willow tree`
+}
+
+function chestTreasureText(gold, hpPot, mpPot){
+  let text=`You kneel beside the chest and pry it open. The lid creaks open, revealing a modest stash someone left behind. You gain ${gold} gold`
+  if(hpPot>0&&mpPot===0){
+    text+=` and ${hpPot} hp potions.`
+  }else if(hpPot>0&&mpPot>0){
+    text+=`, ${hpPot} hp potions and ${mpPot} mp potions.`
+  }else if(mpPot>0){
+    text+=` and ${mpPot} mp potions.`
+  }else{
+    text+=`.`
+  }
+  return text
+}
+
+function ignoreChestText(){
+  return`You cast a wary glance towards the old chest. Something about its placement feels too convenient - too easy. You've seen enough traps and mimics to trust your  instincts. Without another glance you move onwards.`
+}
+
+function findNothingText(){
+  return `You drift through the thick forest, each step muffled by the soft rustle of leaves beneath your boots. The air is cool and still, broken only by the distant cry of an unseen bird echoing through the canopy. No monsters lurk, no travelers pass—only trees stretching endlessly in all directions, their shadows long and quiet. It's as if the forest is holding its breath, watching… waiting.`
+}
+
+// to change all text into this object at a later date - too many things being exported,  or split all into json files and have a different file for purchases, battles, etc easier to find then
 
 const testText = {
   purchase: {
@@ -394,10 +420,13 @@ export {
   noMagic,
   noWeapon,
   notEnoughMana,
-  testText,
   campOutsideText,
   wolvesAmbushText,
   banditsAmbushText,
   payOffBanditsText,
-  escapeFromWolvesText
+  escapeFromWolvesText,
+  findChestText,
+  chestTreasureText,
+  ignoreChestText,
+  findNothingText
 };
