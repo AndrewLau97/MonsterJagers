@@ -2,7 +2,7 @@ import {
   explore,
   goHunt,
   // goFight,
-  goExplore,
+  goExploreFurther,
   restInn,
   campOutside,
   dummyFunction,
@@ -16,6 +16,8 @@ import {
   restart,
   payOffBandits,
   escapeWolves,
+  investigateChest,
+  ignoreChest,
   // lose
 } from "./ExploreFn";
 
@@ -152,7 +154,7 @@ const locations = [
       "Rest at the Inn",
       "Return to town",
     ],
-    "button functions": [goHunt, goExplore, restInn, goTown],
+    "button functions": [goHunt, goExploreFurther, restInn, goTown],
     text: "Where would you like to go?",
   },
   {
@@ -266,7 +268,13 @@ const locations = [
     name: "Ambush",
     "button text":["Fight off bandits", "Pay off the bandits", "Attack the wolves", "Run away"],
     "button functions":[fightBandits, payOffBandits, fightWolves, escapeWolves]
-  }
+  },
+  {
+    //18
+    name:'Found chest',
+    "button text":["Investigate chest", "Ignore and move on","Continue exploring", "Return to town"],
+    "button functions":[investigateChest,ignoreChest,goExploreFurther, goTown]
+  }   
 ];
 
 export default locations;
