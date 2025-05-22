@@ -1,14 +1,5 @@
-import {
-  innRestText,
-  levelUpAtkText,
-  levelUpDefText,
-  levelUpMpText,
-  levelUpText,
-  noLevelUpText,
-  noMoneyInnText,
-  noNeedInnRestText,
-} from "./GameText";
-import updateData from "./UpdateDataBase";
+import { innText } from "./GameText/InnText";
+import { updateData } from "../GameFn/dateBaseFn";
 
 function healthAndManaFunction(saveFile){
   const maxHealth = 100 + (saveFile.stats.hp - 1) * 10;
@@ -26,44 +17,44 @@ function healthAndManaFunction(saveFile){
 function restAtInn(_setLocation, saveFile, setGameText) {
     const [maxHealth,maxMana,restoreHealthAndMana]=healthAndManaFunction(saveFile)
     if(saveFile.health===maxHealth&&saveFile.mana===maxMana){
-        setGameText(noNeedInnRestText())
+        setGameText(innText.basic.noRestNeeded())
     }else{
         if (saveFile.gold >= 20) {
           restoreHealthAndMana(saveFile)
           goldText.innerText -= 20;
           saveFile.gold -= 20;
           updateData(saveFile);
-          setGameText(innRestText());
+          setGameText(innText.basic.rest());
         } else {
-          setGameText(noMoneyInnText());
+          setGameText(innText.basic.noMoney());
         }
     }
 }
 
 function levelUp(setLocation, saveFile, setGameText) {
-  if (saveFile.xp >= 100 * saveFile.level) {
+  if (saveFile.xp >= 50 * saveFile.level) {
     setLocation(16);
-    setGameText(levelUpText());
+    setGameText(innText.level.statChoice());
   } else {
-    const xpRequired=100 * saveFile.level - saveFile.xp
-    setGameText(noLevelUpText(xpRequired));
+    const xpRequired=50 * saveFile.level - saveFile.xp
+    setGameText(innText.level.missingXP(xpRequired));
   }
 }
 
 function levelAtk(setLocation, saveFile, setGameText) {
-    const gameText=levelUpAtkText()
+    const gameText=innText.level.levelAtk()
     const statLeveled="atk"
     handleLevelUp(setLocation, saveFile, setGameText, statLeveled, gameText)
 }
 
 function levelDef(setLocation, saveFile, setGameText) {
-    const gameText=levelUpDefText()
+    const gameText=innText.level.levelDef()
     const statLeveled="def"
     handleLevelUp(setLocation, saveFile, setGameText, statLeveled, gameText)
 }
 
 function levelMp(setLocation, saveFile, setGameText) {
-    const gameText=levelUpMpText()
+    const gameText=innText.level.levelMp()
     const statLeveled="mp"
     handleLevelUp(setLocation, saveFile, setGameText, statLeveled, gameText)
 }
@@ -72,7 +63,7 @@ function levelMp(setLocation, saveFile, setGameText) {
 
 
 function handleLevelUp(setLocation, saveFile, setGameText, statLeveled, statLeveledText){
-  saveFile.xp -= (100*saveFile.level);
+  saveFile.xp -= (50*saveFile.level);
   saveFile.level += 1;
   saveFile.stats[statLeveled] += 1;
   saveFile.stats.hp+=1;

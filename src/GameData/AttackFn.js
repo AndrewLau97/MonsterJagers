@@ -1,29 +1,12 @@
+//rename to combatFn as all fns inside here are to do with combat
+//need to add a run function and check against escape ability
+//if able to run, go town, if not, state unable to run
+
 import monsters from "./Monsters";
 import { gameItems } from "./Items";
-import updateData from "./UpdateDataBase";
-import {
-  monsterAttacksText,
-  takeDamage,
-  dodgeAttack,
-  attackMonster,
-  dealDamage,
-  chooseWeaponElement,
-  meleeWeapon,
-  monsterDodgesText,
-  itemToUseText,
-  goBackToFightText,
-  hpMaxAlreadyText,
-  useHealthPotionText,
-  noPotions,
-  useManaPotionText,
-  mpMaxAlreadyText,
-  chooseMagicElement,
-  noWeapon,
-  noMagic,
-  notEnoughMana,
-} from "./GameText";
-import { lose } from "./ExploreFn";
-import { defeatMonster } from "./ExploreFn";
+import { updateData } from "../GameFn/dateBaseFn";
+import { combatText } from "./GameText/CombatText";
+import { lose, defeatMonster } from "./ExploreFn";
 
 function isHit() {
   return Math.random() > 0.05;
@@ -47,12 +30,14 @@ function monstersAtkDamage(power, shieldDefenceStats, defStats) {
 function monstersTurn(setLocation, saveFile, setGameText) {
   const { inventory, stats } = saveFile;
   let monster;
+  let type;
   for (const monsterType in monsters) {
     if (
       monsters[monsterType].filter(
         (selectedmonster) => selectedmonster.name === monsterName.innerText
       ).length
     ) {
+      type = monsterType;
       monster = monsters[monsterType].filter(
         (selectedmonster) => selectedmonster.name === monsterName.innerText
       )[0];
@@ -60,8 +45,8 @@ function monstersTurn(setLocation, saveFile, setGameText) {
     }
   }
   function monsterAttacks() {
-    setGameText(monsterAttacksText(monster.name));
     if (isHit()) {
+      setGameText(combatText.monstersTurn[type].attacks(monster.name));
       const shieldDefence = gameItems.shield.filter(
         (shield) => shield.name === inventory.shield[0]
       )[0].defence;
@@ -70,7 +55,10 @@ function monstersTurn(setLocation, saveFile, setGameText) {
         shieldDefence,
         stats.def
       );
-      setGameText((prevGameText) => (prevGameText += takeDamage(damageTaken)));
+      setGameText(
+        (prevGameText) =>
+          (prevGameText += combatText.monstersTurn.takeDamage(damageTaken))
+      );
 
       if (saveFile.health > damageTaken) {
         healthText.innerText -= damageTaken;
@@ -83,14 +71,17 @@ function monstersTurn(setLocation, saveFile, setGameText) {
         lose(setLocation, saveFile, setGameText);
       }
     } else {
-      setGameText((prevGameText) => (prevGameText += dodgeAttack()));
+      setGameText(combatText.monstersTurn[type].misses(monster.name));
     }
   }
   return { monster, monsterAttacks };
 }
 
 function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
+  const element = weaponType.split(/(?=[A-Z])/)[0];
+  const weaponOrMagic = weaponType.split(/(?=[A-Z])/)[1].toLowerCase();
   const { inventory, stats, health } = saveFile;
+  const monsterHealth = monsterHealthText.innerText;
   const weaponUsed = gameItems[weaponType].filter(
     (weapon) => weapon.name === inventory[weaponType][0]
   );
@@ -109,27 +100,46 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
   let damageDealt = Math.floor(
     (weaponUsed[0].power + stats.atk * 3) * damageCalculation[resistance]
   );
-  const monsterHealth = monsterHealthText.innerText;
-
-  setGameText(
-    (prevGameText) =>
-      (prevGameText += attackMonster(monster.name, weaponUsed[0].name))
-  );
+  let result;
   if (isMonsterHit(health)) {
+    result = "attacks";
     if (isCrit()) {
       damageDealt = Math.floor(damageDealt * 1.5);
     }
   } else {
     damageDealt = 0;
+    result = "misses";
+  }
+  if (element === "standard") {
     setGameText(
-      (prevGameText) => (prevGameText += monsterDodgesText(monster.name))
+      (prevGameText) =>
+        (prevGameText += combatText.playersTurn[weaponOrMagic].standard[result](
+          monster.name,
+          weaponUsed[0].name
+        ))
+    );
+  } else {
+    setGameText(
+      (prevGameText) =>
+        (prevGameText +=
+          combatText.playersTurn[
+            weaponOrMagic.element[result](
+              monster.name,
+              weaponUsed[0].name,
+              element
+            )
+          ])
     );
   }
 
   if (monsterHealth > damageDealt) {
     monsterHealthText.innerText -= damageDealt;
     setGameText(
-      (prevGameText) => (prevGameText += dealDamage(resistance, damageDealt))
+      (prevGameText) =>
+        (prevGameText += combatText.playersTurn.dealDamage(
+          resistance,
+          damageDealt
+        ))
     );
     goFightButtons(setLocation);
   } else {
@@ -165,7 +175,7 @@ function sortActions(setLocation, saveFile, setGameText, weaponType) {
           playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
         }
       } else {
-        setGameText(notEnoughMana());
+        setGameText(combatText.playersTurn.magic.element.noMana());
       }
     }
   }
@@ -181,9 +191,9 @@ function checkOwned(saveFile, type, setGameText) {
     return true;
   } else {
     if (type.includes("Weapon")) {
-      setGameText(noWeapon());
+      setGameText(combatText.playersTurn.weapon.element.noElement());
     } else {
-      setGameText(noMagic());
+      setGameText(combatText.playersTurn.magic.element.noMagic);
     }
     return false;
   }
@@ -193,7 +203,7 @@ function useElementalWeapon(setLocation, _saveFile, setGameText) {
   setLocation(10);
   button4.style.display = "inline";
   button4.removeAttribute("disabled");
-  setGameText(chooseWeaponElement());
+  setGameText(combatText.controls.elementChoice());
 }
 
 function useFireWeapon(setLocation, saveFile, setGameText) {
@@ -214,7 +224,7 @@ function goAttack(setLocation, _saveFile, setGameText) {
   setLocation(9);
   button4.style.display = "none";
   button4.setAttribute("disabled", "");
-  setGameText(meleeWeapon());
+  setGameText(combatText.controls.meleeChoice());
 }
 
 function goFightButtons(setLocation, _saveFile, setGameText) {
@@ -222,7 +232,7 @@ function goFightButtons(setLocation, _saveFile, setGameText) {
   button4.style.display = "inline";
   button4.removeAttribute("disabled");
   if (setGameText) {
-    setGameText(goBackToFightText());
+    setGameText(combatText.controls.goBackChoice());
   }
 }
 
@@ -230,7 +240,7 @@ function useMagic(setLocation, _saveFile, setGameText) {
   setLocation(11);
   button4.style.display = "inline";
   button4.removeAttribute("disabled");
-  setGameText(chooseMagicElement());
+  setGameText(combatText.controls.magicChoice());
 }
 
 function useFireMagic(setLocation, saveFile, setGameText) {
@@ -248,7 +258,7 @@ function useEarthMagic(setLocation, saveFile, setGameText) {
 }
 
 function useItems(setLocation, _saveFile, setGameText) {
-  setGameText(itemToUseText());
+  setGameText(combatText.controls.potionChoice());
   setLocation(12);
   button4.style.display = "none";
   button4.setAttribute("disabled", "");
@@ -271,12 +281,12 @@ function useHpPotion(setLocation, saveFile, setGameText) {
     const maxHealth = 100 + (saveFile.stats.hp - 1) * 10;
     if (saveFile.health < maxHealth) {
       usePotion(setLocation, saveFile, "health", maxHealth);
-      setGameText(useHealthPotionText() + goBackToFightText());
+      setGameText(combatText.potions.recoverHealth());
     } else {
-      setGameText(hpMaxAlreadyText());
+      setGameText(combatText.potions.healthMax());
     }
   } else {
-    setGameText(noPotions("hp"));
+    setGameText(combatText.potions.noPotion("hp"));
   }
 }
 
@@ -285,12 +295,12 @@ function useMpPotion(setLocation, saveFile, setGameText) {
     const maxMana = 50 + (saveFile.stats.mp - 1) * 10;
     if (saveFile.mana < maxMana) {
       usePotion(setLocation, saveFile, "mana", maxMana);
-      setGameText(useManaPotionText() + goBackToFightText());
+      setGameText(combatText.potions.recoverMana());
     } else {
-      setGameText(mpMaxAlreadyText());
+      setGameText(combatText.potions.manaMax());
     }
   } else {
-    setGameText(noPotions("mp"));
+    setGameText(combatText.potions.noPotion("mp"));
   }
 }
 

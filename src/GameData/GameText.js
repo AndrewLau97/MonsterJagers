@@ -1,3 +1,5 @@
+//need to split game text into multiple different files for ease of location and change
+
 function purchasedWeapon(newWeapon) {
   return `You purchased a ${newWeapon}.`;
 }
@@ -36,25 +38,29 @@ function noMoneyPotion(cost, gold, type) {
   return `You do not have enough gold to buy a ${type} potion. Each potion costs ${cost} gold, you only have ${gold} gold.`;
 }
 
+//moved
+
 function monsterEncounterText(monsterName) {
   return `You encounter a ${monsterName}. What would you like to do?`;
 }
+//done
 
 function monsterAttacksText(monsterName) {
   return ` The ${monsterName} attacks you.`;
 }
-
+//done
 function takeDamage(damage) {
   return ` You have taken ${damage} damage.`;
 }
-
+//done
 function dodgeAttack() {
   return " You managed to dodge the attack, you take no damage.";
 }
-
+//done
 function attackMonster(monsterName, weapon) {
   return ` You attack the ${monsterName} with your ${weapon}.`;
 }
+//done
 
 function dealDamage(resistance, damage) {
   const resistanceText = {
@@ -65,35 +71,42 @@ function dealDamage(resistance, damage) {
   };
   return resistanceText[resistance];
 }
+//done
 
 function meleeWeapon() {
   return `Which weapon would you like to use?`;
 }
+//done
 
 function chooseWeaponElement() {
   return `Which elemental weapon would you like to use?`;
 }
+//done
 
 function chooseMagicElement() {
   return `Which magic type would you like to cast?`;
 }
-
-function rebirthText() {
-  return `You wake up from a strange dream. A sense of deja vu overcomes you as you walk into this town.`;
-}
+//done
 
 function monsterDodgesText(monsterName) {
   return ` The ${monsterName} dodges your attack.`;
 }
+//done
 
 function goBackToFightText() {
   return ` What would you like to do now?`;
 }
+//done
 
 function defeatMonsterText(monsterName, gold, xp, damageDealt) {
   return `You deal ${damageDealt} which finishes the ${monsterName}. You gain ${gold} gold and ${xp} xp, where would you like to go?`;
 }
+//done
 
+function rebirthText() {
+  return `You wake up from a strange dream. A sense of deja vu overcomes you as you walk through the town gates.`;
+}
+//done
 function enterInnText() {
   return `You enter the Hearth and Hammer Inn, what would you like to do?`;
 }
@@ -101,67 +114,74 @@ function enterInnText() {
 function noMoneyInnText() {
   return `You do not have enough money to rest here. You might want to try camping outside to heal up, but be wary of danger.`;
 }
+//done
 
 function innRestText() {
   return `You feel rejuvenated from resting. What would you like to do now?`;
 }
-
+//done
 function noNeedInnRestText() {
   return `You feel completely energized. There is no need to rest.`;
 }
-
+//done
 function levelUpText() {
   return `What would you like to level up?`;
 }
-
+//done
 function noLevelUpText(xpNeededToLevel) {
   return `You do not have enough xp to level up, ${xpNeededToLevel} xp needed to level up.`;
 }
+//done
 
 function levelUpDefText() {
   return `Your body grows more resilient, energy surging through you allowing you to take on tougher foes.`;
 }
+//done
 function levelUpMpText() {
   return `You feel yourself filling up with arcane energy, allowing yourself to command more magical forces than before.`;
 }
+//done
 function levelUpAtkText() {
   return `A surge of strength wells up from within, you feel like you can take on anything.`;
 }
-
+//done
 function itemToUseText() {
   return `What item would you like to use?`;
 }
-
+//done
 function hpMaxAlreadyText() {
   return `You feel healthy and do not require a potion.`;
 }
+//done
 function mpMaxAlreadyText() {
   return `You feel full of arcane energy and do no require a potion.`;
 }
+//done
 
 function useHealthPotionText() {
   return `The bitter liquid goes down in one gulp. A soothing energy pulses through you—your health is restored.`;
 }
-
+//done
 function useManaPotionText() {
   return `Arcane energy courses through your veins as the potion takes effect. Your mind clears, and your mana returns.`;
 }
-
+//done
 function noPotions(type) {
   return `You do not have any ${type} potions to use.`;
 }
-
+//done
 function noWeapon() {
   return `You do not own a weapon of this category, try another weapon.`;
 }
-
+//done
 function noMagic() {
   return `You do not know any magic of this element, try something else.`;
 }
-
+//done
 function notEnoughMana() {
   return `You do not have enough mana to cast this spell, try something else.`;
 }
+//done
 
 function campOutsideText(timeRested) {
   if (timeRested === 1) {
@@ -172,17 +192,17 @@ function campOutsideText(timeRested) {
     return `Every rustle in the underbrush and distant howls kepy your eyes wide and your hand on your blade. By dawn, you managed only moments of sleeps, with your nerves frayed and mind foggy, you get up wanting the day to end once more.`;
   }
 }
-
+//done
 function wolvesAmbushText() {
   return `A low growl pierced your uneasy sleep. With your eyes snapping open, you see a dark shapes dashing between the trees - wolves, their eyes gleaming from your campfire. You bolt up with your blade drawn as the beasts leap towards you. What would you like to do?`;
 }
-
+//done
 function banditsAmbushText() {
   return `The sharp twang of a bowstring jerks you awake, followed by a thud of an arrow burying itself inches from your face. Shadows move fast beyond the reach of your campfire - bandits. Steel flashes before you as you scramble to your feet. The leader comes forth.
   Bandit Leader: Money or Death?
   What would you like to do?`;
 }
-
+//done
 function payOffBanditsText() {
   return `You paid off the bandits—scum who prey on the weak.
 The moment replays in your mind: the weight of the coin in your hands, the silence that followed.
@@ -190,20 +210,20 @@ You chose survival. Not everyone gets that choice… or lives to make it again.
 Now, back in town, the dust still clinging to your boots—
 What would you like to do next?`;
 }
-
+//done
 function escapeFromWolvesText() {
   return `The bustling market streets replace the sounds of the forest—the snapping branches, the growls of wolves at your heels.
 They almost had you.
 You check yourself: a few scrapes, a torn sleeve, and your coin pouch feels lighter than before.
-But you’re safe now.
+But you're safe now.
 You exhale, steadying your breath.
 What would you like to do next?`;
 }
-
+//done
 function findChestText(){
   return `You venture off into the forests, your boots crunching over fallen leaves. A glimmer catches your eye - a weathered wooden chest nested inside the trunk of a willow tree`
 }
-
+//done
 function chestTreasureText(gold, hpPot, mpPot){
   let text=`You kneel beside the chest and pry it open. The lid creaks open, revealing a modest stash someone left behind. You gain ${gold} gold`
   if(hpPot>0&&mpPot===0){
@@ -217,15 +237,15 @@ function chestTreasureText(gold, hpPot, mpPot){
   }
   return text
 }
-
+//done
 function ignoreChestText(){
   return`You cast a wary glance towards the old chest. Something about its placement feels too convenient - too easy. You've seen enough traps and mimics to trust your  instincts. Without another glance you move onwards.`
 }
-
+//done
 function findNothingText(){
   return `You drift through the thick forest, each step muffled by the soft rustle of leaves beneath your boots. The air is cool and still, broken only by the distant cry of an unseen bird echoing through the canopy. No monsters lurk, no travelers pass—only trees stretching endlessly in all directions, their shadows long and quiet. It's as if the forest is holding its breath, watching… waiting.`
 }
-
+//done
 // to change all text into this object at a later date - too many things being exported,  or split all into json files and have a different file for purchases, battles, etc easier to find then
 
 const testText = {
@@ -373,7 +393,7 @@ const testText = {
     notWellRestedOutsideText: () => {},
   },
   rebirthText: () => {
-    return `You wake up from a strange dream. A sense of deja vu overcomes you as you walk into this town.`;
+    return `You wake up from a strange dream. A sense of deja vu overcomes you as you walk through the town gates.`;
   },
 };
 
