@@ -7,22 +7,11 @@ import VillageOneBG from "../assets/Background_images/VillageOne.jpg";
 import monsters from "./Monsters";
 import innBG from "../assets/Background_images/Inn.jpg";
 import outskirtsBG from "../assets/Background_images/Outskirts.jpg";
-import {
-  banditsAmbushText,
-  campOutsideText,
-  chestTreasureText,
-  defeatMonsterText,
-  enterInnText,
-  escapeFromWolvesText,
-  findChestText,
-  findNothingText,
-  ignoreChestText,
-  monsterEncounterText,
-  payOffBanditsText,
-  rebirthText,
-  wolvesAmbushText,
-} from "./GameText";
-import updateData from "./UpdateDataBase";
+import { explorationText } from "./GameText/Exploration";
+import { combatText } from "./GameText/CombatText";
+import { purchaseText } from "./GameText/PurchaseText";
+import { innText } from "./GameText/InnText";
+import { updateData } from "../GameFn/dateBaseFn";
 import { healthAndManaFunction } from "./InnFn";
 import { disableButtons, enableButtons } from "../GameFn/textDisplayFn";
 import { fightMimic, randomEncounter } from "./SelectMonstersFn";
@@ -35,57 +24,67 @@ function goTown(setLocation, _saveFile, setGameText) {
   enableButtons(1, 2, 3);
   disableButtons(4);
   setLocation(0);
-  setGameText("You return to town, what would you want to do?");
+  setGameText(explorationText.baseTown.returnTown());
   monsterStats.style.display = "none";
   background.style.backgroundImage = `url(${VillageOneBG})`;
 }
+
 function shop(setLocation, _saveFile, setGameText) {
   setLocation(1);
-  setGameText("Shopkeeper: What would you like to buy?");
+  setGameText(purchaseText.controls.shop());
   enableButtons(4);
   background.style.backgroundImage = `url(${shopBG})`;
 }
+
 function buyEquipment(setLocation, _saveFile, setGameText) {
   setLocation(2);
-  setGameText("You enter the blacksmith area");
+  setGameText(purchaseText.controls.blacksmith());
   background.style.backgroundImage = `url(${blacksmithBG})`;
 }
+
 function buyElementalWeapon(setLocation, _saveFile, setGameText) {
   setLocation(3);
-  setGameText("You enter the enchanted weapons area");
+  setGameText(purchaseText.controls.enchanted());
   background.style.backgroundImage = `url(${enchantedWeaponBG})`;
 }
+
 function buyMagic(setLocation, _saveFile, setGameText) {
   setLocation(4);
-  setGameText("What magic would you like to learn?");
+  setGameText(purchaseText.controls.magic());
   background.style.backgroundImage = `url(${magicBG})`;
 }
+
 function buyItems(setLocation, _saveFile, setGameText) {
   setLocation(5);
-  setGameText("What items would you like to buy?");
+  setGameText(purchaseText.controls.potions());
   disableButtons(4);
   background.style.backgroundImage = `url(${potionsBG})`;
 }
 
 function explore(setLocation, _saveFile, setGameText) {
   setLocation(6);
-  setGameText("Where would you like to go?");
+  setGameText(explorationText.baseTown.continueThroughTown());
   enableButtons(4);
 }
+
 function goHunt(setLocation, _saveFile, setGameText) {
   setLocation(7);
-  setGameText("Which territory would you like to hunt at?");
+  setGameText(explorationText.baseTown.chooseHunt());
   monsterStats.style.display = "none";
   background.style.backgroundImage = `url(${outskirtsBG})`;
 }
+
 function goFight(setLocation, _saveFile, setGameText, monsterType, fighting) {
   setLocation(8);
   monsterStats.style.display = "inline";
   const monsterHealth = monsters[monsterType][fighting].health;
+
   monsterName.innerText = monsters[monsterType][fighting].name;
   monsterHealthText.innerText = monsterHealth;
   enableButtons(1, 2, 3, 4);
-  setGameText(monsterEncounterText(monsters[monsterType][fighting].name));
+  setGameText(
+    combatText.encounters[monsterType](monsters[monsterType][fighting].name)
+  );
 }
 function goExploreFurther(setLocation, saveFile, setGameText) {
   const event = Math.floor(Math.random() * 3);
@@ -94,13 +93,14 @@ function goExploreFurther(setLocation, saveFile, setGameText) {
   } else if (event === 1) {
     randomEncounter(setLocation, saveFile, setGameText);
   } else if (event === 2) {
-    findNothing(setLocation, saveFile, setGameText)
+    findNothing(setLocation, saveFile, setGameText);
   }
 }
+//in findNothing - make it so you have the ability to camp if you wish
 
 function findChest(setLocation, _saveFile, setGameText) {
   setLocation(18);
-  setGameText(findChestText());
+  setGameText(explorationText.exploreOutTown.findChest());
   enableButtons(1, 2);
   disableButtons(3, 4);
 }
@@ -113,7 +113,7 @@ function continueOn(setLocation) {
 
 function ignoreChest(setLocation, _saveFile, setGameText) {
   continueOn(setLocation);
-  setGameText(ignoreChestText());
+  setGameText(explorationText.exploreOutTown.ignoreChest());
 }
 
 function investigateChest(setLocation, saveFile, setGameText) {
@@ -139,19 +139,23 @@ function normalChest(setLocation, saveFile, setGameText) {
   saveFile.potions.mp += manaPotionsInChest;
   updateData(saveFile);
   setGameText(
-    chestTreasureText(goldInChest, healthPotionsInChest, manaPotionsInChest)
-  ),
-    continueOn(setLocation);
+    explorationText.exploreOutTown.treasureChest(
+      goldInChest,
+      healthPotionsInChest,
+      manaPotionsInChest
+    )
+  );
+  continueOn(setLocation);
 }
 
 function findNothing(setLocation, _saveFile, setGameText) {
-  setGameText(findNothingText());
+  setGameText(explorationText.exploreOutTown.findNothing());
   continueOn(setLocation);
 }
 
 function restInn(setLocation, _saveFile, setGameText) {
   setLocation(15);
-  setGameText(enterInnText());
+  setGameText(innText.basic.enter());
   background.style.backgroundImage = `url(${innBG})`;
   monsterStats.style.display = "none";
 }
@@ -164,39 +168,41 @@ function campOutside(setLocation, saveFile, setGameText) {
   const encounter = Math.random();
   if (encounter < 0.25) {
     campRestedAmount(setLocation, saveFile, setGameText, 1);
-    console.log("wellrested");
   } else if (encounter < 0.5) {
     campRestedAmount(setLocation, saveFile, setGameText, 0.5);
-    console.log("unwellrested");
   } else if (encounter < 0.75) {
     campRestedAmount(setLocation, saveFile, setGameText, 0.25);
-    console.log("barelyrested");
   } else if (encounter < 0.875) {
     encounterBandits(setLocation, saveFile, setGameText);
-    console.log("bandits");
   } else {
     encounterWolves(setLocation, saveFile, setGameText);
-    console.log("wolves");
   }
 }
 
-function encounterBandits(setLocation, saveFile, setGameText) {
+function encounterBandits(setLocation, _saveFile, setGameText) {
   setLocation(17);
-  setGameText(banditsAmbushText());
+  setGameText(explorationText.camp.banditAmbush());
   monsterStats.style.display = "none";
   disableButtons(3, 4);
 }
 
 function payOffBandits(setLocation, saveFile, setGameText) {
   setLocation(0);
-  setGameText(payOffBanditsText());
+  setGameText(explorationText.camp.payBandits());
   escapeFromCamp(saveFile, "bandits");
   background.style.backgroundImage = `url(${VillageOneBG})`;
 }
 
+function encounterWolves(setLocation, _saveFile, setGameText) {
+  setLocation(17);
+  setGameText(explorationText.camp.wolfAmbush());
+  monsterStats.style.display = "none";
+  disableButtons(1, 2);
+}
+
 function escapeWolves(setLocation, saveFile, setGameText) {
   setLocation(0);
-  setGameText(escapeFromWolvesText());
+  setGameText(explorationText.camp.escapeWolves());
   escapeFromCamp(saveFile, "wolves");
   background.style.backgroundImage = `url(${VillageOneBG})`;
 }
@@ -222,13 +228,6 @@ function escapeFromCamp(saveFile, type) {
   disableButtons(4);
 }
 
-function encounterWolves(setLocation, saveFile, setGameText) {
-  setLocation(17);
-  setGameText(wolvesAmbushText());
-  monsterStats.style.display = "none";
-  disableButtons(1, 2);
-}
-
 function campRestedAmount(setLocation, saveFile, setGameText, timeRested) {
   const [maxHealth, maxMana] = healthAndManaFunction(saveFile);
   const missingHealth = maxHealth - saveFile.health;
@@ -241,7 +240,7 @@ function campRestedAmount(setLocation, saveFile, setGameText, timeRested) {
   manaText.innerText = saveFile.mana;
   monsterStats.style.display = "none";
   background.style.backgroundImage = `url(${outskirtsBG})`;
-  setGameText(campOutsideText(timeRested));
+  setGameText(explorationText.camp.campOutside(timeRested));
 }
 
 function nextArea() {
@@ -249,7 +248,7 @@ function nextArea() {
 }
 function lose(setLocation, _saveFile, setGameText) {
   setLocation(13);
-  setGameText("You have died, would you like to restart your adventure?");
+  setGameText(combatText.defeat.playersDefeat());
 }
 
 function defeatMonster(
@@ -259,11 +258,17 @@ function defeatMonster(
   monster,
   damageDealt
 ) {
-  // const goldGain = Math.floor(monster.level * 4.2);
   const goldGain = Math.floor(monster.level + 4 * (5.5 * Math.random() + 1));
   const xpGain = Math.floor(monster.level + 4 * (3.5 * Math.random() + 1));
   setLocation(14);
-  setGameText(defeatMonsterText(monster.name, goldGain, xpGain, damageDealt));
+  setGameText(
+    combatText.defeat.monstersDefeat(
+      monster.name,
+      goldGain,
+      xpGain,
+      damageDealt
+    )
+  );
   saveFile.gold += goldGain;
   saveFile.xp += xpGain;
   updateData(saveFile);
@@ -273,8 +278,8 @@ function defeatMonster(
   button4.removeAttribute("disabled");
 }
 
-function restart(setLocation, _saveFile, setGameText) {
-  updateData({
+function restart(setLocation, saveFile, setGameText) {
+  saveFile={
     xp: 0,
     gold: 50,
     level: 1,
@@ -300,13 +305,41 @@ function restart(setLocation, _saveFile, setGameText) {
       waterWeapon: [],
       standardWeapon: ["stick"],
     },
-  });
+  }
+  updateData(saveFile)
+  // updateData({
+  //   xp: 0,
+  //   gold: 50,
+  //   level: 1,
+  //   stats: {
+  //     hp: 1,
+  //     mp: 1,
+  //     atk: 1,
+  //     def: 1,
+  //   },
+  //   health: 100,
+  //   mana: 50,
+  //   potions: {
+  //     hp: 0,
+  //     mp: 0,
+  //   },
+  //   inventory: {
+  //     shield: ["No Shield"],
+  //     fireMagic: [],
+  //     earthMagic: [],
+  //     fireWeapon: [],
+  //     waterMagic: [],
+  //     earthWeapon: [],
+  //     waterWeapon: [],
+  //     standardWeapon: ["stick"],
+  //   },
+  // });
   setLocation(0);
   healthText.innerText = 100;
   manaText.innerText = 50;
   goldText.innerText = 50;
   xpText.innerText = 0;
-  setGameText(rebirthText());
+  setGameText(combatText.defeat.rebirth());
   button4.style.display = "none";
   button4.setAttribute("disabled", "");
   monsterStats.style.display = "none";

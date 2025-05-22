@@ -2,14 +2,12 @@ import CharacterStats from "../Components/CharacterStats"
 import Control from "../Components/Controls"
 import DisplayText from "../Components/DisplayText"
 import MonsterStats from "../Components/MonsterStats"
-// import locations from "../GameData/Locations"
-// import { scrollText } from "../GameFn/textDisplayFn"
 import { useEffect, useState } from "react"
 import { getData } from "../GameFn/dateBaseFn"
 import supabase from "../config/supabaseClient"
 
 
-const TestPlay=()=>{
+const Play=()=>{
     const [locationInfo, setLocationInfo]=useState(null);
     const [saveFile,setSaveFile] = useState(null);
     const [gameText,setGameText]=useState("Welcome to my first game")
@@ -46,4 +44,4 @@ useEffect(() => {
     </>)
 }
 
-export default TestPlay
+export default Play

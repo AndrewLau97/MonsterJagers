@@ -2,6 +2,9 @@ const CharacterStats = ({saveFile}) => {
   return (
     <>
       <div id="stats">
+        <span className='stat fade'>
+          Lvl:{" "}<span id="lvlText" className='fade'>{saveFile.level}</span>
+        </span>
         <span className="stat fade">
           XP:{" "}
           <span id="xpText" className="fade">

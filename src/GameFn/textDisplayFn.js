@@ -9,7 +9,7 @@ function scrollText(text) {
     }
 
     let char = 0;
-    let timer = setInterval(onTick, 10);
+    let timer = setInterval(onTick, 1);
     button1.setAttribute("disabled", "");
     button2.setAttribute("disabled", "");
     button3.setAttribute("disabled", "");

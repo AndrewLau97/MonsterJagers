@@ -14,18 +14,8 @@ import {
   noMoneyPotion,
 } from "./GameText";
 
-import updateData from "./UpdateDataBase";
-// import supabase from "../config/supabaseClient";
+import { updateData } from "../GameFn/dateBaseFn";
 
-// const updateData = async (saveFile) => {
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-//   const { data } = await supabase
-//     .from("users")
-//     .update({ saveData: saveFile })
-//     .eq("id", user.id);
-// };
 
 function buyWeapon(saveFile, inventoryType, setGameText) {
   const { inventory } = saveFile;
