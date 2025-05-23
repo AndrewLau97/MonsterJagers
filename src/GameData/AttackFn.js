@@ -6,7 +6,7 @@ import monsters from "./Monsters";
 import { gameItems } from "./Items";
 import { updateData } from "../GameFn/dateBaseFn";
 import { combatText } from "./GameText/CombatText";
-import { lose, defeatMonster } from "./ExploreFn";
+import { lose, defeatMonster, goTown } from "./ExploreFn";
 
 function isHit() {
   return Math.random() > 0.05;
@@ -323,6 +323,14 @@ function checkEnoughMana(saveFile, type) {
   }
 }
 
+function escapeFromFight(setLocation,saveFile,setGameText){
+  if(saveFile.canEscape){
+    goTown(setLocation,saveFile,setGameText,combatText.escape.success())
+  }else{
+    setGameText(combatText.escape.failed())
+  }
+}
+
 export {
   useNormalWeapon,
   useElementalWeapon,
@@ -338,4 +346,5 @@ export {
   useHpPotion,
   useMpPotion,
   goFightButtons,
+  escapeFromFight
 };

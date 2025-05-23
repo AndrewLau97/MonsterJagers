@@ -20,11 +20,13 @@ function dummyFunction() {
   console.log("Dummy function");
 }
 
-function goTown(setLocation, _saveFile, setGameText) {
+function goTown(setLocation, _saveFile, setGameText, replaceText) {
   enableButtons(1, 2, 3);
   disableButtons(4);
   setLocation(0);
-  setGameText(explorationText.baseTown.returnTown());
+  replaceText
+    ? setGameText(replaceText)
+    : setGameText(explorationText.baseTown.returnTown());
   monsterStats.style.display = "none";
   background.style.backgroundImage = `url(${VillageOneBG})`;
 }
@@ -269,6 +271,7 @@ function defeatMonster(
       damageDealt
     )
   );
+  saveFile.canEscape=true
   saveFile.gold += goldGain;
   saveFile.xp += xpGain;
   updateData(saveFile);
@@ -279,22 +282,15 @@ function defeatMonster(
 }
 
 function restart(setLocation, saveFile, setGameText) {
-  saveFile={
+  saveFile = {
     xp: 0,
     gold: 50,
-    level: 1,
-    stats: {
-      hp: 1,
-      mp: 1,
-      atk: 1,
-      def: 1,
-    },
-    health: 100,
     mana: 50,
-    potions: {
-      hp: 0,
-      mp: 0,
-    },
+    level: 1,
+    stats: { hp: 1, mp: 1, atk: 1, def: 1 },
+    health: 100,
+    potions: { hp: 0, mp: 0 },
+    canEscape: true,
     inventory: {
       shield: ["No Shield"],
       fireMagic: [],
@@ -305,35 +301,8 @@ function restart(setLocation, saveFile, setGameText) {
       waterWeapon: [],
       standardWeapon: ["stick"],
     },
-  }
-  updateData(saveFile)
-  // updateData({
-  //   xp: 0,
-  //   gold: 50,
-  //   level: 1,
-  //   stats: {
-  //     hp: 1,
-  //     mp: 1,
-  //     atk: 1,
-  //     def: 1,
-  //   },
-  //   health: 100,
-  //   mana: 50,
-  //   potions: {
-  //     hp: 0,
-  //     mp: 0,
-  //   },
-  //   inventory: {
-  //     shield: ["No Shield"],
-  //     fireMagic: [],
-  //     earthMagic: [],
-  //     fireWeapon: [],
-  //     waterMagic: [],
-  //     earthWeapon: [],
-  //     waterWeapon: [],
-  //     standardWeapon: ["stick"],
-  //   },
-  // });
+  };
+  updateData(saveFile);
   setLocation(0);
   healthText.innerText = 100;
   manaText.innerText = 50;
