@@ -30,21 +30,4 @@ const updateData = async (saveFile) => {
     .eq("id", user.id);
 };
 
-const checkEscapeAbility = async () => {
-  const user = await getUser();
-  const { data } = await supabase
-    .from("users")
-    .select("ableToEscape")
-    .eq("id", user.id);
-  console.log(data[0].ableToEscape);
-};
-
-const changeEscapeAbility = async (escape) => {
-  const user = await getUser();
-  const { data } = await supabase
-    .from("users")
-    .update({ ableToEscape: escape })
-    .eq("id", user.id);
-};
-
-export { getData, updateData, checkEscapeAbility, changeEscapeAbility };
+export { getData, updateData};

@@ -51,6 +51,7 @@ import {
   useHpPotion,
   useMpPotion,
   goFightButtons,
+  escapeFromFight
 } from "./AttackFn";
 
 import { levelUp, restAtInn, levelMp, levelAtk, levelDef } from "./InnFn";
@@ -173,7 +174,7 @@ const locations = [
     //8
     name: "Fight",
     "button text": ["Attack", "Use Magic", "Use Items", "Run"],
-    "button functions": [goAttack, useMagic, useItems, goTown],
+    "button functions": [goAttack, useMagic, useItems, escapeFromFight],
     text: "You are fighting a monster",
   },
   {

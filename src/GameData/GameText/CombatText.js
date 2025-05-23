@@ -178,6 +178,30 @@ const combatText = {
         return `The ${monsterName} charges at you and slams its massive fists down—but you roll aside just in time, and the blow crashes into the earth, carving a deep crater where you stood seconds ago.`;
       },
     },
+    bandits: {
+      attacks: (monsterName) => {
+        return `${monsterName} darts forward with surprising speed, cloak billowing behind him. He feints left, then drives his dagger low, straight into your side. The blade punches through the gaps in your armor. A burst of pain blooms.`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} lunges with a snarl, but his footing falters on a patch of loose gravel. You sidestep just in time, and his dagger whistles harmlessly past your ribs. The bandit curses, stumbling forward and exposing his back for a brief moment.`;
+      },
+    },
+    wolves: {
+      attacks: (monsterName) => {
+        return `${monsterName} circles once—twice—then springs with terrifying speed. Its jaws clamp down on your arm, fangs tearing through leather and skin. You cry out as the beast thrashes, trying to rip the flesh free.`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} lowers its head, muscles coiling like a drawn bow. With a guttural growl, it springs. Fangs flash in the dying light—aimed straight for your throat. But you twist your body at the last second, dropping to a low crouch. The wolf sails over your shoulder, snapping at empty air. It lands in a skid, claws tearing into the dirt, and whirls around with a furious snarl.`;
+      },
+    },
+    mimics: {
+      attacks: (monsterName) => {
+        return `${monsterName}'s tongue shoots out like a barbed whip, coiling around your ankle. Before you can react, you're yanked off your feet and dragged toward its gaping, tooth-lined maw. It bites down on your leg, teeth sinking into flesh and armor alike.`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} lashes out—fast, faster than it has any right to be—straight for your chest. You dive sideways, heart hammering, the tip of the tongue grazing your coat as you hit the ground hard and roll. The mimic's grotesque appendage slaps against the ground where you stood a heartbeat ago, leaving behind a smear of slick saliva that sizzles faintly.`;
+      },
+    },
 
     takeDamage: (damage) => {
       return ` You have taken ${damage} damage.`;
@@ -214,6 +238,14 @@ Where would you like to go next?`;
     },
     rebirth: () => {
       return `A strange sense awakens as you pass through the town gates—a heavy wave of déjà vu. The streets feel hauntingly familiar, as if you’ve walked them before… but will you choose the same path this time? Each step stirs memories of what was lost, and you wonder: can you change your fate, or are you doomed to repeat it all again?`;
+    },
+  },
+  escape: {
+    failed: () => {
+      return `You turn to flee—but the enemy is faster. In a flash, they cut off your escape. There's no way out. Your path is blocked, and the fight isn't over. You have no choice but to stand your ground.`;
+    },
+    success: () => {
+      return `You turn to flee—your instincts take over. Branches whip past, the roar of battle fading behind you. You escape into the woods... and don't look back. The gates of town rise ahead, warm light spilling from windows, the air rich with hearthfire. You're safe—for now.`;
     },
   },
 };

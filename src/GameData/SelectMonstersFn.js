@@ -3,6 +3,12 @@ import wizardTowerBG from "../assets/Background_images/WizardsTower.jpg"
 import elementalPlaneBG from "../assets/Background_images/ElementalPlane.jpg"
 import { goFight } from "./ExploreFn";
 import monsters from "./Monsters";
+import { updateData } from "../GameFn/dateBaseFn";
+
+function cantRun(saveFile){
+saveFile.canEscape=false;
+updateData(saveFile)
+}
 
 function fightSlime(setLocation, saveFile, setGameText) {
   background.style.backgroundImage = `url(${slimeBG})`;
@@ -21,18 +27,21 @@ function fightElemental(setLocation, saveFile, setGameText) {
 }
 
 function fightBandits(setLocation, saveFile, setGameText){
+  cantRun(saveFile)
   //background to be determined
   const monsterType='bandits'
   selectMonster(setLocation, saveFile, setGameText, monsterType,4)
 }
 
 function fightWolves(setLocation, saveFile, setGameText){
+  cantRun(saveFile)
   //background to be determined
   const monsterType='wolves'
   selectMonster(setLocation, saveFile, setGameText, monsterType,3)
 }
 
 function fightMimic(setLocation, saveFile, setGameText){
+  cantRun(saveFile)
   //background to be determined
   const monsterType='mimics'
   selectMonster(setLocation,saveFile,setGameText,monsterType,3)
