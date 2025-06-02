@@ -1,9 +1,32 @@
-const CharacterStats = ({saveFile}) => {
+import { useEffect } from "react";
+import VillageOneBG from "../assets/Background_images/VillageOne.jpg";
+import VillageTwoBG from "../assets/Background_images/VillageTwo.jpg";
+
+const CharacterStats = ({ saveFile }) => {
+  useEffect(() => {
+    function changeBackground(saveFile) {
+      const village = {
+        1: () => {
+          background.style.backgroundImage = `url(${VillageOneBG})`;
+        },
+        2: () => {
+          background.style.backgroundImage = `url(${VillageTwoBG})`;
+        },
+        3: () => {},
+      };
+      village[saveFile.area]();
+    }
+    changeBackground(saveFile);
+  }, []);
+
   return (
     <>
       <div id="stats">
-        <span className='stat fade'>
-          Lvl:{" "}<span id="lvlText" className='fade'>{saveFile.level}</span>
+        <span className="stat fade">
+          Lvl:{" "}
+          <span id="lvlText" className="fade">
+            {saveFile.level}
+          </span>
         </span>
         <span className="stat fade">
           XP:{" "}

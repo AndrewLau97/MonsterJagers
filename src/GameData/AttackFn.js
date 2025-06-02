@@ -2,7 +2,7 @@
 //need to add a run function and check against escape ability
 //if able to run, go town, if not, state unable to run
 
-import monsters from "./Monsters";
+import {monstersArea1,allMonsters} from "./Monsters";
 import { gameItems } from "./Items";
 import { updateData } from "../GameFn/dateBaseFn";
 import { combatText } from "./GameText/CombatText";
@@ -31,19 +31,20 @@ function monstersTurn(setLocation, saveFile, setGameText) {
   const { inventory, stats } = saveFile;
   let monster;
   let type;
-  for (const monsterType in monsters) {
+  for (const monsterType in allMonsters[`area`+`${saveFile.area}`]) {
     if (
-      monsters[monsterType].filter(
+      allMonsters[`area`+`${saveFile.area}`][monsterType].filter(
         (selectedmonster) => selectedmonster.name === monsterName.innerText
       ).length
     ) {
       type = monsterType;
-      monster = monsters[monsterType].filter(
+      monster = allMonsters[`area`+`${saveFile.area}`][monsterType].filter(
         (selectedmonster) => selectedmonster.name === monsterName.innerText
       )[0];
       break;
     }
   }
+  console.log(monster)
   function monsterAttacks() {
     if (isHit()) {
       setGameText(combatText.monstersTurn[type].attacks(monster.name));
