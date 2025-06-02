@@ -298,6 +298,39 @@ const combatText = {
         return `${monsterName} misses`;
       },
     },
+    boss1: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss2: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss3: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss4: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    
 
     takeDamage: (damage) => {
       return ` You have taken ${damage} damage.`;
@@ -335,6 +368,9 @@ Where would you like to go next?`;
     rebirth: () => {
       return `A strange sense awakens as you pass through the town gates—a heavy wave of déjà vu. The streets feel hauntingly familiar, as if you’ve walked them before… but will you choose the same path this time? Each step stirs memories of what was lost, and you wonder: can you change your fate, or are you doomed to repeat it all again?`;
     },
+    knockedOut:()=>{
+      return `wake up at inn, you lost the fight against the boss, maybe you should level and gear up before trying the fight again.`
+    }
   },
   escape: {
     failed: () => {

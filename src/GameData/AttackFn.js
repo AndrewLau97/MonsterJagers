@@ -2,7 +2,7 @@
 //need to add a run function and check against escape ability
 //if able to run, go town, if not, state unable to run
 
-import {monstersArea1,allMonsters} from "./Monsters";
+import { monstersArea1, allMonsters } from "./Monsters";
 import { gameItems } from "./Items";
 import { updateData } from "../GameFn/dateBaseFn";
 import { combatText } from "./GameText/CombatText";
@@ -28,26 +28,33 @@ function monstersAtkDamage(power, shieldDefenceStats, defStats) {
 }
 
 function monstersTurn(setLocation, saveFile, setGameText) {
-  const { inventory, stats } = saveFile;
+  const { inventory, stats, area } = saveFile;
   let monster;
   let type;
-  for (const monsterType in allMonsters[`area`+`${saveFile.area}`]) {
-    if (
-      allMonsters[`area`+`${saveFile.area}`][monsterType].filter(
-        (selectedmonster) => selectedmonster.name === monsterName.innerText
-      ).length
-    ) {
-      type = monsterType;
-      monster = allMonsters[`area`+`${saveFile.area}`][monsterType].filter(
-        (selectedmonster) => selectedmonster.name === monsterName.innerText
-      )[0];
-      break;
+  if (saveFile.isBossFight) {
+    monster = allMonsters.boss[area - 1];
+    type = `boss${area}`;
+  } else {
+    for (const monsterType in allMonsters[`area` + `${saveFile.area}`]) {
+      if (
+        allMonsters[`area` + `${saveFile.area}`][monsterType].filter(
+          (selectedmonster) => selectedmonster.name === monsterName.innerText
+        ).length
+      ) {
+        type = monsterType;
+        monster = allMonsters[`area` + `${saveFile.area}`][monsterType].filter(
+          (selectedmonster) => selectedmonster.name === monsterName.innerText
+        )[0];
+        break;
+      }
     }
   }
-  console.log(monster)
   function monsterAttacks() {
     if (isHit()) {
-      setGameText(combatText.monstersTurn[type].attacks(monster.name));
+      setGameText(
+        (prevGameText) =>
+          (prevGameText += combatText.monstersTurn[type].attacks(monster.name))
+      );
       const shieldDefence = gameItems.shield.filter(
         (shield) => shield.name === inventory.shield[0]
       )[0].defence;
@@ -76,6 +83,7 @@ function monstersTurn(setLocation, saveFile, setGameText) {
     }
   }
   return { monster, monsterAttacks };
+  // return [ monster, monsterAttacks ];
 }
 
 function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
@@ -113,23 +121,16 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
   }
   if (element === "standard") {
     setGameText(
-      (prevGameText) =>
-        (prevGameText += combatText.playersTurn[weaponOrMagic].standard[result](
-          monster.name,
-          weaponUsed[0].name
-        ))
+      combatText.playersTurn[weaponOrMagic].standard[result](
+        monster.name,
+        weaponUsed[0].name
+      )
     );
   } else {
     setGameText(
-      (prevGameText) =>
-        (prevGameText +=
-          combatText.playersTurn[
-            weaponOrMagic.element[result](
-              monster.name,
-              weaponUsed[0].name,
-              element
-            )
-          ])
+      combatText.playersTurn[
+        weaponOrMagic.element[result](monster.name, weaponUsed[0].name, element)
+      ]
     );
   }
 
@@ -161,19 +162,20 @@ function sortActions(setLocation, saveFile, setGameText, weaponType) {
     saveFile,
     setGameText
   );
+  const monsterCurrHealth = document.getElementById("monsterHealthText");
   if (checkOwned(saveFile, weaponType, setGameText)) {
     if (weaponType.includes("Weapon")) {
-      monsterAttacks();
-      if (saveFile.health > 0) {
-        playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
+      playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
+      if (Number(monsterCurrHealth.innerText) > 0) {
+        monsterAttacks();
       }
     } else if (weaponType.includes("Magic")) {
       const manaNeeded = checkEnoughMana(saveFile, weaponType);
       if (manaNeeded) {
-        monsterAttacks();
-        if (saveFile.health > 0) {
-          reduceMana(manaNeeded, saveFile);
-          playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
+        reduceMana(manaNeeded, saveFile);
+        playersTurn(setLocation, saveFile, setGameText, monster, weaponType);
+        if (Number(monsterCurrHealth.innerText) > 0) {
+          monsterAttacks();
         }
       } else {
         setGameText(combatText.playersTurn.magic.element.noMana());
@@ -324,11 +326,11 @@ function checkEnoughMana(saveFile, type) {
   }
 }
 
-function escapeFromFight(setLocation,saveFile,setGameText){
-  if(saveFile.canEscape){
-    goTown(setLocation,saveFile,setGameText,combatText.escape.success())
-  }else{
-    setGameText(combatText.escape.failed())
+function escapeFromFight(setLocation, saveFile, setGameText) {
+  if (saveFile.canEscape) {
+    goTown(setLocation, saveFile, setGameText, combatText.escape.success());
+  } else {
+    setGameText(combatText.escape.failed());
   }
 }
 
@@ -347,5 +349,5 @@ export {
   useHpPotion,
   useMpPotion,
   goFightButtons,
-  escapeFromFight
+  escapeFromFight,
 };

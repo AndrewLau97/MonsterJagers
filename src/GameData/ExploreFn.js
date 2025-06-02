@@ -347,9 +347,14 @@ function nextArea(setLocation, saveFile, setGameText) {
   fightBoss(setLocation, saveFile, setGameText);
 }
 
-function lose(setLocation, _saveFile, setGameText) {
-  setLocation(13);
-  setGameText(combatText.defeat.playersDefeat());
+function lose(setLocation, saveFile, setGameText) {
+  if(saveFile.isBossFight){
+    loseBossFight(setLocation, saveFile, setGameText)
+  }
+  else{
+    setLocation(13);
+    setGameText(combatText.defeat.playersDefeat());
+  }
 }
 
 function defeatMonster(
@@ -378,6 +383,18 @@ function defeatMonster(
   xpText.innerText = saveFile.xp;
   button4.style.display = "inline";
   button4.removeAttribute("disabled");
+}
+
+function loseBossFight(setLocation, saveFile, setGameText){
+  const restoreHealthAndMana = healthAndManaFunction(saveFile)[2];
+  saveFile.canEscape=true;
+  saveFile.isBossFight=false;
+  restoreHealthAndMana(saveFile)
+  setLocation(15);
+  background.style.backgroundImage = `url(${innBG})`;
+  setGameText(combatText.defeat.knockedOut())
+  enableButtons(1,2,3,4)
+  monsterStats.style.display = "none";
 }
 
 function restart(setLocation, saveFile, setGameText) {

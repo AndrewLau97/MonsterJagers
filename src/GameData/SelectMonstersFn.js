@@ -110,6 +110,7 @@ function fightTitan(setLocation, saveFile, setGameText) {
 }
 
 function fightBoss(setLocation, saveFile, setGameText) {
+  saveFile.isBossFight=true;
   cantRun(saveFile);
   const monsterType = "boss";
   selectMonster(setLocation, saveFile, setGameText, monsterType);

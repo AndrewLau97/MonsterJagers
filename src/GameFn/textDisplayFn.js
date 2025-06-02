@@ -1,17 +1,3 @@
-import shopBG from "../assets/Background_images/Shop.jpg";
-import blacksmithBG from "../assets/Background_images/Blacksmith.jpg";
-import enchantedWeaponBG from "../assets/Background_images/EnchantedWeapons.jpg";
-import magicBG from "../assets/Background_images/MagicBooks.jpg";
-import potionsBG from "../assets/Background_images/Potions.jpg";
-import VillageOneBG from "../assets/Background_images/VillageOne.jpg";
-import VillageTwoBG from "../assets/Background_images/VillageTwo.jpg";
-import VillageThreeBG from "../assets/Background_images/VillageThree.jpg";
-import innBG from "../assets/Background_images/Inn.jpg";
-import outskirtsBG from "../assets/Background_images/Outskirts.jpg";
-import slimeBG from "../assets/Background_images/SlimeHabitat.jpg"
-import wizardBG from "../assets/Background_images/WizardsTower.jpg";
-import elementalBG from  "../assets/Background_images/ElementalPlane.jpg"
-
 function scrollText(text) {
   const splitText = text.split("");
   const shownGameText = document.getElementById("text");
