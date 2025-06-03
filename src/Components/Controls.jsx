@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import locations from "../GameData/Locations";
 
-const Control = ({ locationInfo, setLocationInfo, saveFile, setGameText, backgrounds }) => { 
+const Control = ({ locationInfo, setLocationInfo, saveFile, setGameText }) => { 
   const keyPress = (event) => {
     if (event.key === "1" && !button1.hasAttribute("disabled")) {
       handleBtnClick(0);

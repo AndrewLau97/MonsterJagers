@@ -129,9 +129,9 @@ const combatText = {
       const resistanceText = {
         immune:
           " The monster is immune to your attack, try another element type.",
-        resistant: ` The monster is resistant to your attack, you only deal ${damage} damage. Try another element type.`,
-        weakness: ` The monster is weak to your attack, you deal ${damage} damage!`,
-        neutral: ` You deal ${damage} damage.`,
+        resistant: ` The monster is resistant to your attack, you only deal ${damage} damage. Try another element type. `,
+        weakness: ` The monster is weak to your attack, you deal ${damage} damage! `,
+        neutral: ` You deal ${damage} damage. `,
       };
       return resistanceText[resistance];
     },

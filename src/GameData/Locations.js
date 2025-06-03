@@ -338,6 +338,40 @@ const locations = [
       goTown,
     ],
   },
+  {
+    //21
+    name: "town2",
+    "button text": [
+      "Shop",
+      "Walk through town",
+      "Continue onwards to town3",
+      "",
+    ],
+    "button functions": [shop, explore, nextArea, dummyFunction],
+  },
+  {
+    //22
+    name: "town3",
+    "button text": [
+      "Shop",
+      "Walk through town",
+      "Challenge the castle",
+      "",
+    ],
+    "button functions": [shop, explore, nextArea, dummyFunction],
+  },
+  {
+    //23
+    //fight boss or return to town - but if you return need to fight gatekeeper again
+    name: "final fight",
+    "button text": [
+      "replay",
+      "replay",
+      "replay",
+      "replay",
+    ],
+    "button functions": [dummyFunction, dummyFunction, dummyFunction, dummyFunction],
+  },
 ];
 
 export default locations;

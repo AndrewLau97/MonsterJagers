@@ -15,9 +15,9 @@ import VillageTwoBG from "../assets/Background_images/VillageTwo.jpg";
 import VillageThreeBG from "../assets/Background_images/VillageThree.jpg";
 import innBG from "../assets/Background_images/Inn.jpg";
 import outskirtsBG from "../assets/Background_images/Outskirts.jpg";
-import slimeBG from "../assets/Background_images/SlimeHabitat.jpg"
+import slimeBG from "../assets/Background_images/SlimeHabitat.jpg";
 import wizardBG from "../assets/Background_images/WizardsTower.jpg";
-import elementalBG from  "../assets/Background_images/ElementalPlane.jpg"
+import elementalBG from "../assets/Background_images/ElementalPlane.jpg";
 
 // import { preloadImg } from "../GameData/ExploreFn";
 
@@ -39,13 +39,12 @@ const Play = () => {
     outskirtsBG,
     slimeBG,
     wizardBG,
-    elementalBG
+    elementalBG,
   ];
   const preloadImage = (src) => {
-  const img = new Image();
-  img.src = src;
-};
-
+    const img = new Image();
+    img.src = src;
+  };
 
   useEffect(() => {
     getData(setSaveFile);
@@ -63,8 +62,8 @@ const Play = () => {
         }
       )
       .subscribe();
-      setBackgrounds(allBackgrounds)
-    allBackgrounds.forEach(preloadImage)
+    setBackgrounds(allBackgrounds);
+    allBackgrounds.forEach(preloadImage);
   }, []);
 
   return (
@@ -74,13 +73,16 @@ const Play = () => {
       ) : (
         <>
           <div id="game">
-            <CharacterStats saveFile={saveFile} backgrounds={backgrounds} />
+            <CharacterStats
+              saveFile={saveFile}
+              setLocationInfo={setLocationInfo}
+            />
             <Control
               locationInfo={locationInfo}
               setLocationInfo={setLocationInfo}
               saveFile={saveFile}
               setGameText={setGameText}
-              backgrounds={backgrounds}
+              // backgrounds={backgrounds}
             />
             <MonsterStats />
             <DisplayText gameText={gameText} />

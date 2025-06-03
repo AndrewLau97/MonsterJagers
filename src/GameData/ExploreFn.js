@@ -15,7 +15,11 @@ import { purchaseText } from "./GameText/PurchaseText";
 import { innText } from "./GameText/InnText";
 import { updateData } from "../GameFn/dateBaseFn";
 import { healthAndManaFunction } from "./InnFn";
-import { changeBG, disableButtons, enableButtons } from "../GameFn/textDisplayFn";
+import {
+  changeBG,
+  disableButtons,
+  enableButtons,
+} from "../GameFn/textDisplayFn";
 import { fightBoss, fightMimic, randomEncounter } from "./SelectMonstersFn";
 
 // function preloadImg(setBackgrounds) {
@@ -44,7 +48,6 @@ function dummyFunction() {
 function goTown(setLocation, saveFile, setGameText, replaceText) {
   enableButtons(1, 2, 3);
   disableButtons(4);
-  setLocation(0);
   replaceText
     ? setGameText(replaceText)
     : setGameText(explorationText.baseTown.returnTown());
@@ -52,15 +55,21 @@ function goTown(setLocation, saveFile, setGameText, replaceText) {
 
   const townBG = {
     1: () => {
-      // changeBG(0)
+      setLocation(0)
       background.style.backgroundImage = `url(${VillageOneBG})`;
     },
     2: () => {
+      setLocation(21)
       background.style.backgroundImage = `url(${VillageTwoBG})`;
     },
     3: () => {
+      setLocation(22)
       background.style.backgroundImage = `url(${VillageThreeBG})`;
     },
+    4:()=>{
+      setLocation(23)
+      //background to be inside castlegrounds
+    }
   };
   townBG[saveFile.area]();
 }
@@ -348,10 +357,9 @@ function nextArea(setLocation, saveFile, setGameText) {
 }
 
 function lose(setLocation, saveFile, setGameText) {
-  if(saveFile.isBossFight){
-    loseBossFight(setLocation, saveFile, setGameText)
-  }
-  else{
+  if (saveFile.isBossFight) {
+    loseBossFight(setLocation, saveFile, setGameText);
+  } else {
     setLocation(13);
     setGameText(combatText.defeat.playersDefeat());
   }
@@ -364,36 +372,62 @@ function defeatMonster(
   monster,
   damageDealt
 ) {
-  const goldGain = Math.floor(monster.level + 4 * (5.5 * Math.random() + 1));
-  const xpGain = Math.floor(monster.level + 4 * (3.5 * Math.random() + 1));
-  setLocation(14);
-  setGameText(
-    combatText.defeat.monstersDefeat(
-      monster.name,
-      goldGain,
-      xpGain,
-      damageDealt
-    )
-  );
+  let goldGain;
+  let xpGain;
+  if (saveFile.isBossFight) {
+    goldGain = 1000;
+    xpGain = 1000;
+    saveFile.isBossFight = false;
+    saveFile.area++;
+    const towns = {
+      2: () => {
+        setLocation(21);
+        setGameText(explorationText.newTown.secondTown())
+        background.style.backgroundImage=`url(${VillageTwoBG})`
+      },
+      3: () => {
+        setLocation(22);
+        setGameText(explorationText.newTown.thirdTown())
+        background.style.backgroundImage=`url(${VillageThreeBG})`
+      },
+      4: () => {
+        setLocation(23);
+        setGameText(explorationText.end())
+      },
+    };
+    towns[saveFile.area]()
+  } else {
+    goldGain = Math.floor(monster.level + 4 * (5.5 * Math.random() + 1));
+    xpGain = Math.floor(monster.level + 4 * (3.5 * Math.random() + 1));
+    setLocation(14);
+    setGameText(
+      combatText.defeat.monstersDefeat(
+        monster.name,
+        goldGain,
+        xpGain,
+        damageDealt
+      )
+    );
+  }
   saveFile.canEscape = true;
   saveFile.gold += goldGain;
   saveFile.xp += xpGain;
   updateData(saveFile);
   goldText.innerText = saveFile.gold;
   xpText.innerText = saveFile.xp;
-  button4.style.display = "inline";
-  button4.removeAttribute("disabled");
+  enableButtons(1, 2, 3);
+  disableButtons(4);
 }
 
-function loseBossFight(setLocation, saveFile, setGameText){
+function loseBossFight(setLocation, saveFile, setGameText) {
   const restoreHealthAndMana = healthAndManaFunction(saveFile)[2];
-  saveFile.canEscape=true;
-  saveFile.isBossFight=false;
-  restoreHealthAndMana(saveFile)
+  saveFile.canEscape = true;
+  saveFile.isBossFight = false;
+  restoreHealthAndMana(saveFile);
   setLocation(15);
   background.style.backgroundImage = `url(${innBG})`;
-  setGameText(combatText.defeat.knockedOut())
-  enableButtons(1,2,3,4)
+  setGameText(combatText.defeat.knockedOut());
+  enableButtons(1, 2, 3, 4);
   monsterStats.style.display = "none";
 }
 

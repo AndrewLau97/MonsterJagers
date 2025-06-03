@@ -56,6 +56,11 @@ const explorationText = {
       return `You drift through the thick forest, each step muffled by the soft rustle of leaves beneath your boots. The air is cool and still, broken only by the distant cry of an unseen bird echoing through the canopy. No monsters lurk, no travelers pass—only trees stretching endlessly in all directions, their shadows long and quiet. It's as if the forest is holding its breath, watching… waiting.`;
     },
   },
+  newTown:{
+    secondTown:()=>{return `enter second town`},
+    thirdTown:()=>{return `enter third town`},
+  },
+  end:()=>{return `complete game`}
 };
 
 export { explorationText };
