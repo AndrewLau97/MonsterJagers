@@ -63,4 +63,9 @@ function enableButtons(...buttons) {
   // window[`button` + button].removeAttribute("disabled");
 }
 
-export { scrollText, disableButtons, enableButtons };
+function changeBG(chosenBG, allBackgrounds){
+  const background=document.getElementById('background');
+  background.style.backgroundImage=`url(${allBackgrounds[chosenBG]})`
+}
+
+export { scrollText, disableButtons, enableButtons, changeBG };

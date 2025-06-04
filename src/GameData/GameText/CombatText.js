@@ -1,5 +1,5 @@
 const combatText = {
-  encounters: {
+  encounters1: {
     slimes: (monsterName) => {
       return `You step into an open field, the tall grass swaying gently in the breeze. For a moment, the scene feels peaceful—until a strange, wet squelch breaks the silence. A ${monsterName} suddenly bounces into your path, its form quivering with intent.`;
     },
@@ -27,7 +27,7 @@ const combatText = {
           return ` You tighten your grip around your ${weapon} and dash forward, delivering a clean and powerful swing that lands solidly against the ${monsterName}`;
         },
         misses: (monsterName, weapon) => {
-          return ` You tighten your grip around your ${weapon} and dash forward, delivering a clean and powerful swing that lands solidly against the ${monsterName}`;
+          return ` You tighten your grip around your ${weapon} and dash forward, but your swing narrowly misses the ${monsterName}, leaving you momentarily off balance.`;
         },
       },
       element: {
@@ -129,9 +129,9 @@ const combatText = {
       const resistanceText = {
         immune:
           " The monster is immune to your attack, try another element type.",
-        resistant: ` The monster is resistant to your attack, you only deal ${damage} damage. Try another element type.`,
-        weakness: ` The monster is weak to your attack, you deal ${damage} damage!`,
-        neutral: ` You deal ${damage} damage.`,
+        resistant: ` The monster is resistant to your attack, you only deal ${damage} damage. Try another element type. `,
+        weakness: ` The monster is weak to your attack, you deal ${damage} damage! `,
+        neutral: ` You deal ${damage} damage. `,
       };
       return resistanceText[resistance];
     },
@@ -202,6 +202,135 @@ const combatText = {
         return `${monsterName} lashes out—fast, faster than it has any right to be—straight for your chest. You dive sideways, heart hammering, the tip of the tongue grazing your coat as you hit the ground hard and roll. The mimic's grotesque appendage slaps against the ground where you stood a heartbeat ago, leaving behind a smear of slick saliva that sizzles faintly.`;
       },
     },
+    skeleton: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    hellhound: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    demon: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    zombies: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    vampires: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    werewolves: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    orc: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    ogre: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    giant: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    golems: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    behemoth: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    titans: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss1: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss2: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss3: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    boss4: {
+      attacks: (monsterName) => {
+        return `${monsterName} attacks`;
+      },
+      misses: (monsterName) => {
+        return `${monsterName} misses`;
+      },
+    },
+    
 
     takeDamage: (damage) => {
       return ` You have taken ${damage} damage.`;
@@ -239,6 +368,9 @@ Where would you like to go next?`;
     rebirth: () => {
       return `A strange sense awakens as you pass through the town gates—a heavy wave of déjà vu. The streets feel hauntingly familiar, as if you’ve walked them before… but will you choose the same path this time? Each step stirs memories of what was lost, and you wonder: can you change your fate, or are you doomed to repeat it all again?`;
     },
+    knockedOut:()=>{
+      return `wake up at inn, you lost the fight against the boss, maybe you should level and gear up before trying the fight again.`
+    }
   },
   escape: {
     failed: () => {
@@ -250,4 +382,82 @@ Where would you like to go next?`;
   },
 };
 
-export { combatText };
+const encounters = {
+  1: {
+    slimes: (monsterName) => {
+      return `You step into an open field, the tall grass swaying gently in the breeze. For a moment, the scene feels peaceful—until a strange, wet squelch breaks the silence. A ${monsterName} suddenly bounces into your path, its form quivering with intent.`;
+    },
+    wizards: (monsterName) => {
+      return `As you approach the dark silhouette of the tower rising against the sky, the air grows thick and heavy, charged with a subtle arcane energy. A figure steps from the tower’s arched doorway, robes billowing in the unnatural stillness.
+      The ${monsterName} before you speaks, voice laced with power: "You are trespassing in my domain. Leave now, or face the consequences."`;
+    },
+    elementals: (monsterName) => {
+      return `The earth trembles beneath your feet as you step into a vast, otherworldly plain. Before you, a raging river cuts its way between crimson cliffs, its waters churning with untamed energy. In the distance, a massive volcano roars, casting fire and smoke into the twilight sky. A sudden shift in the air makes your skin crawl—you feel a presence behind you. You turn slowly... and come face to face with a hulking ${monsterName}.`;
+    },
+    bandits: (monsterName) => {
+      return `Before you, the bandits form a rough semicircle, their eyes gleaming with greed and malice. ${monsterName} steps forward, muscles coiled like a predator's, fingers tightening around the hilt of a jagged blade. The air crackles with hostility as their snarling challenge fills the space between you.`;
+    },
+    wolves: (monsterName) => {
+      return `The wolves move with lethal grace, their sleek forms blending seamlessly with the underbrush. ${monsterName} snarls low, hackles raised, eyes burning with primal hunger. The pack tightens its circle, the scent of fear heavy in the cold air as their silent growls signal the imminent attack.`;
+    },
+    mimics: (monsterName) => {
+      return `You spot a seemingly ordinary chest nestled in the corner of the dimly lit room. Its wood looks worn, and the metal hinges are tarnished, inviting you to approach. But as you reach out, the chest suddenly twists and snarls—it's a ${monsterName} waiting to catch the unwary.`;
+    },
+  },
+  2: {
+    demon: (monsterName) => {
+      return `${monsterName}`;
+    },
+    hellhound: (monsterName) => {
+      return `${monsterName}`;
+    },
+    skeleton: (monsterName) => {
+      return `${monsterName}`;
+    },
+    zombie: (monsterName) => {
+      return `${monsterName}`;
+    },
+    vampire: (monsterName) => {
+      return `${monsterName}`;
+    },
+    werewolves: (monsterName) => {
+      return `${monsterName}`;
+    },
+  },
+  3: {
+    giant: (monsterName) => {
+      return `${monsterName}`;
+    },
+    ogre: (monsterName) => {
+      return `${monsterName}`;
+    },
+    orc: (monsterName) => {
+      return `${monsterName}`;
+    },
+    golems: (monsterName) => {
+      return `${monsterName}`;
+    },
+    behemoth: (monsterName) => {
+      return `${monsterName}`;
+    },
+    titans: (monsterName) => {
+      return `${monsterName}`;
+    },
+  },
+  boss: {
+    firstBoss: (monsterName) => {
+      return `${monsterName}`;
+    },
+    secondBoss: (monsterName) => {
+      return `${monsterName}`;
+    },
+    thirdBoss: (monsterName) => {
+      return `${monsterName}`;
+    },
+    finalBoss: (monsterName) => {
+      return `${monsterName}`;
+    },
+  },
+};
+
+export { combatText, encounters };

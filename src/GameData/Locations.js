@@ -1,7 +1,6 @@
 import {
   explore,
   goHunt,
-  // goFight,
   goExploreFurther,
   restInn,
   campOutside,
@@ -18,7 +17,6 @@ import {
   escapeWolves,
   investigateChest,
   ignoreChest,
-  // lose
 } from "./ExploreFn";
 
 import {
@@ -34,7 +32,19 @@ import {
   purchaseMpPotion,
 } from "./PurchaseFn";
 
-import { fightSlime, fightWizard, fightElemental, fightBandits, fightWolves } from "./SelectMonstersFn";
+import {
+  fightSlime,
+  fightWizard,
+  fightElemental,
+  fightBandits,
+  fightWolves,
+  fightSkeleton,
+  fightHellhound,
+  fightDemon,
+  fightGiant,
+  fightOrc,
+  fightOgre,
+} from "./SelectMonstersFn";
 
 import {
   useNormalWeapon,
@@ -51,7 +61,7 @@ import {
   useHpPotion,
   useMpPotion,
   goFightButtons,
-  escapeFromFight
+  escapeFromFight,
 } from "./AttackFn";
 
 import { levelUp, restAtInn, levelMp, levelAtk, levelDef } from "./InnFn";
@@ -267,15 +277,101 @@ const locations = [
   {
     //17
     name: "Ambush",
-    "button text":["Fight off bandits", "Pay off the bandits", "Attack the wolves", "Run away"],
-    "button functions":[fightBandits, payOffBandits, fightWolves, escapeWolves]
+    "button text": [
+      "Fight off bandits",
+      "Pay off the bandits",
+      "Attack the wolves",
+      "Run away",
+    ],
+    "button functions": [
+      fightBandits,
+      payOffBandits,
+      fightWolves,
+      escapeWolves,
+    ],
   },
   {
     //18
-    name:'Found chest',
-    "button text":["Investigate chest", "Ignore and move on","Continue exploring", "Return to town"],
-    "button functions":[investigateChest,ignoreChest,goExploreFurther, goTown]
-  }   
+    name: "Found chest",
+    "button text": [
+      "Investigate chest",
+      "Ignore and move on",
+      "Continue exploring",
+      "Return to town",
+    ],
+    "button functions": [
+      investigateChest,
+      ignoreChest,
+      goExploreFurther,
+      goTown,
+    ],
+  },
+  {
+    //19
+    name: "Hunting 2",
+    "button text": [
+      "Catacombs",
+      "Upper realm of hell",
+      "Lower realm of hell",
+      "Return to town",
+    ],
+    "button functions": [
+      fightSkeleton,
+      fightHellhound,
+      fightDemon,
+      goTown,
+    ],
+  },
+  {
+    //20
+    name: "Hunting 3",
+    "button text": [
+      "The Mountains",
+      "The Wildlands",
+      "The Ruins of the forgotten",
+      "Return to town",
+    ],
+    "button functions": [
+      fightOrc,
+      fightOgre,
+      fightGiant,
+      goTown,
+    ],
+  },
+  {
+    //21
+    name: "town2",
+    "button text": [
+      "Shop",
+      "Walk through town",
+      "Continue onwards to town3",
+      "",
+    ],
+    "button functions": [shop, explore, nextArea, dummyFunction],
+  },
+  {
+    //22
+    name: "town3",
+    "button text": [
+      "Shop",
+      "Walk through town",
+      "Challenge the castle",
+      "",
+    ],
+    "button functions": [shop, explore, nextArea, dummyFunction],
+  },
+  {
+    //23
+    //fight boss or return to town - but if you return need to fight gatekeeper again
+    name: "final fight",
+    "button text": [
+      "replay",
+      "replay",
+      "replay",
+      "replay",
+    ],
+    "button functions": [dummyFunction, dummyFunction, dummyFunction, dummyFunction],
+  },
 ];
 
 export default locations;
