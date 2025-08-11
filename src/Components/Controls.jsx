@@ -48,22 +48,22 @@ const Control = ({ locationInfo, setLocationInfo, saveFile, setGameText }) => {
       {" "}
       {locationInfo !== null ? (
         <>
-          <div id="controls">
-            <button id="button1" onClick={handleBtnClick}>
+          <div id="controls" className='rpgui-container framed-grey'>
+            <button id="button1" className="rpgui-button" onClick={handleBtnClick}>
               {locations[locationInfo]["button text"][0]}
             </button>
-            <button id="button2" onClick={handleBtnClick}>
+            <button id="button2" className="rpgui-button" onClick={handleBtnClick}>
               {locations[locationInfo]["button text"][1]}
             </button>
-            <button id="button3" onClick={handleBtnClick}>
+            <button id="button3" className="rpgui-button" onClick={handleBtnClick}>
               {locations[locationInfo]["button text"][2]}
             </button>
             {locations[locationInfo]["button text"][3] ? (
-              <button id="button4" onClick={handleBtnClick}>
+              <button id="button4" className="rpgui-button" onClick={handleBtnClick}>
                 {locations[locationInfo]["button text"][3]}
               </button>
             ) : (
-              <button id="button4" onClick={handleBtnClick} disabled>
+              <button id="button4" className="rpgui-button" onClick={handleBtnClick} disabled>
                 {locations[locationInfo]["button text"][3]}
               </button>
             )}
@@ -71,17 +71,17 @@ const Control = ({ locationInfo, setLocationInfo, saveFile, setGameText }) => {
         </>
       ) : (
         <>
-          <div id="controls">
-            <button id="button1" onClick={handleBtnClick}>
+          <div id="controls" className='rpgui-container framed-grey'>
+            <button id="button1" className="rpgui-button" onClick={handleBtnClick}>
               Shop
             </button>
-            <button id="button2" onClick={handleBtnClick}>
+            <button id="button2" className="rpgui-button" onClick={handleBtnClick}>
               Walk through town
             </button>
-            <button id="button3" onClick={handleBtnClick}>
+            <button id="button3" className="rpgui-button" onClick={handleBtnClick}>
               Continue onwards to town2 name undecided
             </button>
-            <button id="button4" disabled>
+            <button id="button4" className="rpgui-button" disabled>
               Leave Store
             </button>
           </div>

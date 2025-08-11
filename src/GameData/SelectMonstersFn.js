@@ -11,19 +11,19 @@ function cantRun(saveFile) {
 }
 
 function fightSlime(setLocation, saveFile, setGameText) {
-  background.style.backgroundImage = `url(${slimeBG})`;
+  scene.style.backgroundImage = `url(${slimeBG})`;
   const monsterType = "slimes";
   selectMonster(setLocation, saveFile, setGameText, monsterType, 3);
 }
 
 function fightWizard(setLocation, saveFile, setGameText) {
-  background.style.backgroundImage = `url(${wizardTowerBG})`;
+  scene.style.backgroundImage = `url(${wizardTowerBG})`;
   const monsterType = "wizards";
   selectMonster(setLocation, saveFile, setGameText, monsterType, 3);
 }
 
 function fightElemental(setLocation, saveFile, setGameText) {
-  background.style.backgroundImage = `url(${elementalPlaneBG})`;
+  scene.style.backgroundImage = `url(${elementalPlaneBG})`;
   const monsterType = "elementals";
   selectMonster(setLocation, saveFile, setGameText, monsterType, 3);
 }

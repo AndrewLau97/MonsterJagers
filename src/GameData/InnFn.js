@@ -1,15 +1,18 @@
 import { innText } from "./GameText/InnText";
 import { updateData } from "../GameFn/dateBaseFn";
+import { updateUIBars } from "../GameFn/textDisplayFn";
 
 function healthAndManaFunction(saveFile){
   const maxHealth = 100 + (saveFile.stats.hp - 1) * 10;
   const maxMana= 50+(saveFile.stats.mp-1)*10;
   function restoreHealthAndMana(saveFile){
-    healthText.innerText = maxHealth;
-    manaText.innerText=maxMana
+    currentHealth.innerText = maxHealth;
+    currentMana.innerText=maxMana
     saveFile.mana = maxMana
     saveFile.health = maxHealth;
     updateData(saveFile);
+    updateUIBars(saveFile, 'health')
+    updateUIBars(saveFile, 'mana')
   }
   return [maxHealth,maxMana, restoreHealthAndMana]
 }
@@ -68,6 +71,7 @@ function handleLevelUp(setLocation, saveFile, setGameText, statLeveled, statLeve
   saveFile.stats[statLeveled] += 1;
   saveFile.stats.hp+=1;
   updateData(saveFile)
+  updateUIBars(saveFile, 'xp')
   healthAndManaFunction(saveFile)[2](saveFile)
   setGameText(statLeveledText)
   setLocation(15)

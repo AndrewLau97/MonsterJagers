@@ -19,6 +19,7 @@ import {
   changeBG,
   disableButtons,
   enableButtons,
+  updateUIBars,
 } from "../GameFn/textDisplayFn";
 import { fightBoss, fightMimic, randomEncounter } from "./SelectMonstersFn";
 
@@ -52,24 +53,28 @@ function goTown(setLocation, saveFile, setGameText, replaceText) {
     ? setGameText(replaceText)
     : setGameText(explorationText.baseTown.returnTown());
   monsterStats.style.display = "none";
-
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
   const townBG = {
     1: () => {
-      setLocation(0)
-      background.style.backgroundImage = `url(${VillageOneBG})`;
+      setLocation(0);
+      scene.style.backgroundImage = `url(${VillageOneBG})`;
     },
     2: () => {
-      setLocation(21)
-      background.style.backgroundImage = `url(${VillageTwoBG})`;
+      setLocation(21);
+      scene.style.backgroundImage = `url(${VillageTwoBG})`;
     },
     3: () => {
-      setLocation(22)
-      background.style.backgroundImage = `url(${VillageThreeBG})`;
+      setLocation(22);
+      scene.style.backgroundImage = `url(${VillageThreeBG})`;
     },
-    4:()=>{
-      setLocation(23)
+    4: () => {
+      setLocation(23);
       //background to be inside castlegrounds
-    }
+    },
   };
   townBG[saveFile.area]();
 }
@@ -79,20 +84,20 @@ function shop(setLocation, _saveFile, setGameText) {
   setGameText(purchaseText.controls.shop());
   enableButtons(4);
   // changeBG(3, backgrounds)
-  background.style.backgroundImage = `url(${shopBG})`;
+  scene.style.backgroundImage = `url(${shopBG})`;
 }
 
 function buyEquipment(setLocation, _saveFile, setGameText) {
   setLocation(2);
   setGameText(purchaseText.controls.blacksmith());
-  background.style.backgroundImage = `url(${blacksmithBG})`;
+  scene.style.backgroundImage = `url(${blacksmithBG})`;
   // changeBG(4, backgrounds)
 }
 
 function buyElementalWeapon(setLocation, _saveFile, setGameText) {
   setLocation(3);
   setGameText(purchaseText.controls.enchanted());
-  background.style.backgroundImage = `url(${enchantedWeaponBG})`;
+  scene.style.backgroundImage = `url(${enchantedWeaponBG})`;
   // changeBG(5,backgrounds)
 }
 
@@ -100,7 +105,7 @@ function buyMagic(setLocation, _saveFile, setGameText) {
   setLocation(4);
   setGameText(purchaseText.controls.magic());
   // changeBG(6,backgrounds)
-  background.style.backgroundImage = `url(${magicBG})`;
+  scene.style.backgroundImage = `url(${magicBG})`;
 }
 
 function buyItems(setLocation, _saveFile, setGameText) {
@@ -108,7 +113,7 @@ function buyItems(setLocation, _saveFile, setGameText) {
   setGameText(purchaseText.controls.potions());
   disableButtons(4);
   // changeBG(7,backgrounds)
-  background.style.backgroundImage = `url(${potionsBG})`;
+  scene.style.backgroundImage = `url(${potionsBG})`;
 }
 
 function explore(setLocation, _saveFile, setGameText) {
@@ -132,8 +137,13 @@ function goHunt(setLocation, saveFile, setGameText) {
   whereToGo[saveFile.area]();
   setGameText(explorationText.baseTown.chooseHunt());
   monsterStats.style.display = "none";
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
   // changeBG(9,backgrounds)
-  background.style.backgroundImage = `url(${outskirtsBG})`;
+  scene.style.backgroundImage = `url(${outskirtsBG})`;
 }
 
 function goFight(setLocation, saveFile, setGameText, monsterType, fighting) {
@@ -151,7 +161,12 @@ function goFight(setLocation, saveFile, setGameText, monsterType, fighting) {
   // );
   enableButtons(1, 2, 3, 4);
   setLocation(8);
-  monsterStats.style.display = "inline";
+  monsterStats.style.display = "flex";
+  if (window.innerWidth <= 600) {
+    scene.style.height = "41%";
+  } else {
+    scene.style.height = "61%";
+  }
   if (monsterType === "boss") {
     monsterHealthText.innerText = allMonsters[`boss`][saveFile.area - 1].health;
     monsterName.innerText = allMonsters[`boss`][saveFile.area - 1].name;
@@ -247,11 +262,17 @@ function findNothing(setLocation, _saveFile, setGameText) {
 }
 
 function restInn(setLocation, _saveFile, setGameText) {
+  enableButtons(1, 2, 3, 4);
   setLocation(15);
   setGameText(innText.basic.enter());
   // changeBG(8,backgrounds)
-  background.style.backgroundImage = `url(${innBG})`;
+  scene.style.backgroundImage = `url(${innBG})`;
   monsterStats.style.display = "none";
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
 }
 
 function campOutside(setLocation, saveFile, setGameText) {
@@ -291,6 +312,11 @@ function encounterBandits(setLocation, _saveFile, setGameText) {
   setLocation(17);
   setGameText(explorationText.camp.banditAmbush());
   monsterStats.style.display = "none";
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
   disableButtons(3, 4);
 }
 
@@ -298,13 +324,18 @@ function payOffBandits(setLocation, saveFile, setGameText) {
   setLocation(0);
   setGameText(explorationText.camp.payBandits());
   escapeFromCamp(saveFile, "bandits");
-  background.style.backgroundImage = `url(${VillageOneBG})`;
+  scene.style.backgroundImage = `url(${VillageOneBG})`;
 }
 
 function encounterWolves(setLocation, _saveFile, setGameText) {
   setLocation(17);
   setGameText(explorationText.camp.wolfAmbush());
   monsterStats.style.display = "none";
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
   disableButtons(1, 2);
 }
 
@@ -312,7 +343,7 @@ function escapeWolves(setLocation, saveFile, setGameText) {
   setLocation(0);
   setGameText(explorationText.camp.escapeWolves());
   escapeFromCamp(saveFile, "wolves");
-  background.style.backgroundImage = `url(${VillageOneBG})`;
+  scene.style.backgroundImage = `url(${VillageOneBG})`;
 }
 
 function escapeFromCamp(saveFile, type) {
@@ -331,7 +362,7 @@ function escapeFromCamp(saveFile, type) {
   saveFile.gold -= lostCoin;
   updateData(saveFile);
   goldText.innerText = saveFile.gold;
-  healthText.innerText = saveFile.health;
+  currentHealth.innerText = saveFile.health;
   enableButtons(1, 2, 3);
   disableButtons(4);
 }
@@ -343,11 +374,18 @@ function campRestedAmount(setLocation, saveFile, setGameText, timeRested) {
   saveFile.health += Math.floor(missingHealth * timeRested);
   saveFile.mana += Math.floor(missingMana * timeRested);
   updateData(saveFile);
+  updateUIBars(saveFile,'health')
+  updateUIBars(saveFile,'mana')
   setLocation(7);
-  healthText.innerText = saveFile.health;
-  manaText.innerText = saveFile.mana;
+  currentHealth.innerText = saveFile.health;
+  currentMana.innerText = saveFile.mana;
   monsterStats.style.display = "none";
-  background.style.backgroundImage = `url(${outskirtsBG})`;
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
+  scene.style.backgroundImage = `url(${outskirtsBG})`;
   setGameText(explorationText.camp.campOutside(timeRested));
 }
 
@@ -382,20 +420,20 @@ function defeatMonster(
     const towns = {
       2: () => {
         setLocation(21);
-        setGameText(explorationText.newTown.secondTown())
-        background.style.backgroundImage=`url(${VillageTwoBG})`
+        setGameText(explorationText.newTown.secondTown());
+        scene.style.backgroundImage = `url(${VillageTwoBG})`;
       },
       3: () => {
         setLocation(22);
-        setGameText(explorationText.newTown.thirdTown())
-        background.style.backgroundImage=`url(${VillageThreeBG})`
+        setGameText(explorationText.newTown.thirdTown());
+        scene.style.backgroundImage = `url(${VillageThreeBG})`;
       },
       4: () => {
         setLocation(23);
-        setGameText(explorationText.end())
+        setGameText(explorationText.end());
       },
     };
-    towns[saveFile.area]()
+    towns[saveFile.area]();
   } else {
     goldGain = Math.floor(monster.level + 4 * (5.5 * Math.random() + 1));
     xpGain = Math.floor(monster.level + 4 * (3.5 * Math.random() + 1));
@@ -414,9 +452,9 @@ function defeatMonster(
   saveFile.xp += xpGain;
   updateData(saveFile);
   goldText.innerText = saveFile.gold;
-  xpText.innerText = saveFile.xp;
-  enableButtons(1, 2, 3);
-  disableButtons(4);
+  updateUIBars(saveFile,'xp')
+  // xpText.innerText = saveFile.xp;
+  enableButtons(1, 2, 3, 4);
 }
 
 function loseBossFight(setLocation, saveFile, setGameText) {
@@ -425,10 +463,15 @@ function loseBossFight(setLocation, saveFile, setGameText) {
   saveFile.isBossFight = false;
   restoreHealthAndMana(saveFile);
   setLocation(15);
-  background.style.backgroundImage = `url(${innBG})`;
+  scene.style.backgroundImage = `url(${innBG})`;
   setGameText(combatText.defeat.knockedOut());
   enableButtons(1, 2, 3, 4);
   monsterStats.style.display = "none";
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
 }
 
 function restart(setLocation, saveFile, setGameText) {
@@ -456,15 +499,23 @@ function restart(setLocation, saveFile, setGameText) {
   };
   updateData(saveFile);
   setLocation(0);
-  healthText.innerText = 100;
-  manaText.innerText = 50;
+  currentHealth.innerText = 100;
+  currentMana.innerText = 50;
   goldText.innerText = 50;
-  xpText.innerText = 0;
+  // xpText.innerText = 0;
+  updateUIBars(saveFile, 'health')
+  updateUIBars(saveFile, 'mana')
+  updateUIBars(saveFile, 'xp')
   setGameText(combatText.defeat.rebirth());
   button4.style.display = "none";
   button4.setAttribute("disabled", "");
   monsterStats.style.display = "none";
-  background.style.backgroundImage = `url(${VillageOneBG})`;
+  if (window.innerWidth <= 600) {
+    scene.style.height = "48%";
+  } else {
+    scene.style.height = "68%";
+  }
+  scene.style.backgroundImage = `url(${VillageOneBG})`;
 }
 
 export {

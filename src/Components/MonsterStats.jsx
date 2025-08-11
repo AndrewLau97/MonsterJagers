@@ -1,7 +1,7 @@
 const MonsterStats = () => {
   return (
     <>
-      <div id="monsterStats">
+      <div id="monsterStats" className='rpgui-container framed-golden-2'>
         <span className="stat fade">
           Monster Name:{" "}
           <strong>

@@ -8,7 +8,7 @@ const DisplayText = ({gameText}) => {
     },[gameText])
   return (
     <>
-      <div id="text">{/* {gameText} */}</div>
+      <div id="text" className='rpgui-container framed-golden'>{/* {gameText} */}</div>
     </>
   );
 };

@@ -18,6 +18,7 @@ import outskirtsBG from "../assets/Background_images/Outskirts.jpg";
 import slimeBG from "../assets/Background_images/SlimeHabitat.jpg";
 import wizardBG from "../assets/Background_images/WizardsTower.jpg";
 import elementalBG from "../assets/Background_images/ElementalPlane.jpg";
+import LocationBackground from "../Components/LocationBackground";
 
 // import { preloadImg } from "../GameData/ExploreFn";
 
@@ -72,7 +73,11 @@ const Play = () => {
         <p>loading</p>
       ) : (
         <>
-          <div id="game">
+          <div id="game" className="rpgui-content">
+            <LocationBackground/>
+            <MonsterStats />
+            <DisplayText gameText={gameText} />
+            <div id="player">
             <CharacterStats
               saveFile={saveFile}
               setLocationInfo={setLocationInfo}
@@ -84,8 +89,7 @@ const Play = () => {
               setGameText={setGameText}
               // backgrounds={backgrounds}
             />
-            <MonsterStats />
-            <DisplayText gameText={gameText} />
+            </div>
           </div>
         </>
       )}

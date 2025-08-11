@@ -1,3 +1,5 @@
+import { healthAndManaFunction } from "../GameData/InnFn";
+
 function scrollText(text) {
   const splitText = text.split("");
   const shownGameText = document.getElementById("text");
@@ -64,8 +66,19 @@ function enableButtons(...buttons) {
 }
 
 function changeBG(chosenBG, allBackgrounds){
-  const background=document.getElementById('background');
-  background.style.backgroundImage=`url(${allBackgrounds[chosenBG]})`
+  const scene=document.getElementById('scene');
+  scene.style.backgroundImage=`url(${allBackgrounds[chosenBG]})`
 }
 
-export { scrollText, disableButtons, enableButtons, changeBG };
+function updateUIBars(saveFile, type){
+  console.log('test')
+  const maxAmount={
+    health:healthAndManaFunction(saveFile)[0],
+    mana:healthAndManaFunction(saveFile)[1],
+    xp:50 * saveFile.level - saveFile.xp
+  }
+  const percentage=Math.floor((saveFile[type]/maxAmount[type])*100)>=100?100:Math.floor((saveFile[type]/maxAmount[type])*100)
+  window[type+'Amount'].style.backgroundSize=`${percentage}% 100%, 36px 100%`
+}
+
+export { scrollText, disableButtons, enableButtons, changeBG, updateUIBars };

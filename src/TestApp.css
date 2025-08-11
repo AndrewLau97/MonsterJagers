@@ -1,0 +1,533 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+#login {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  text-align: center;
+}
+
+body {
+  background-image: url("./assets/Background_images/LoadingScreen.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: grey;
+}
+
+#login {
+  background-color: white;
+  width: 500px;
+}
+
+#game {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+#scene {
+  width: 100%;
+  height: 68%;
+  background-image: url("./assets/Background_images/LoadingScreen.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position:25% 75%;
+}
+
+#text {
+  width: 100%;
+  height: 15%;
+}
+
+#player{
+  width:100%;
+  height:17%;
+  display: flex;
+  flex-wrap: wrap;
+}
+#playerStats,#controls{
+  width:50%;
+  height:100%;
+}
+
+@media (max-width: 600px) {
+  #playerStats,#controls{
+    width:100%;
+    height:50%;
+  }
+  #player{height:40%}
+  #scene{height:48%}
+}
+
+#monsterStats {
+  width: 100%;
+  height: 7%;
+  display:none;
+}
+
+#playerStats{
+  display:flexbox;
+}
+
+#noBars{
+  margin:10px 0;
+  width:100%;
+  display: flex; 
+  padding-left: 5px;
+}
+
+@media (max-width: 600px) {
+  #noBars{
+  margin:0px 0;
+}
+}
+
+#bars{
+  display: flex;
+  flex-wrap: wrap;
+  width:100%;
+}
+
+#alignBar{
+  display:flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-left:5px;
+}
+
+#monsterStats{
+  text-align: center;
+  margin:auto;
+  padding-top: 9px;
+}
+
+#controls {
+  display:inline-flexbox;
+}
+
+button {
+  cursor: pointer;
+  color: #0a0a23;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  width: 45%;
+  height: 70px;
+  vertical-align: middle;
+}
+
+#button1 {
+  text-wrap: balance;
+  border-radius: 10px;
+  /* margin: 10px; */
+}
+#button2 {
+  text-wrap: balance;
+  border-radius: 10px;
+  /* margin: 10px; */
+}
+#button3 {
+  text-wrap: balance;
+  border-radius: 10px;
+  /* margin: 10px; */
+}
+#button4 {
+  text-wrap: balance;
+  /* margin: 10px; */
+  border-radius: 10px;
+  display:none
+}
+
+.rpgui-content {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  overflow: hidden;
+  font-size: 0.8em;
+}
+
+.rpgui-content * {
+  /* remove outline effect for input elements etc */
+  outline: none;
+  /* prevent dragging */
+  /* user-drag: none; */
+  -webkit-user-drag: none;
+  /* prevent text selecting */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* pixelated enlargement filter (to keep the pixel-art style when enlarging pictures) */
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  /* default font */
+  font-family: "Press Start 2P", cursive;
+}
+
+.rpgui-content,
+label {
+  cursor: url("./assets/UI_images/img/cursor/default.png"), auto;
+}
+
+/* pointer / hand cursor important */
+/* this rule is for when you specifically request this cursor class */
+
+.rpgui-cursor-point,
+.rpgui-cursor-point * {
+  cursor: url("./assets/UI_images/img/cursor/point.png") 10 0, auto !important;
+}
+
+/* pointer / hand cursor, not important, for all elements that have pointer by-default */
+
+.rpgui-content a,
+.rpgui-content button,
+.rpgui-button,
+.rpgui-slider-container,
+.rpgui-content input[type="radio"].rpgui-radio + label,
+.rpgui-list-imp,
+.rpgui-dropdown-imp,
+.rpgui-content input[type="checkbox"].rpgui-checkbox + label {
+  cursor: url("./assets/UI_images/img/cursor/point.png") 10 0, auto;
+}
+
+/* .rpgui-container {
+  position: fixed;
+  z-index: 10;
+  overflow: show;
+} */
+
+/* game div with background image*/
+.rpgui-container.framed {
+  /* border */
+  border-style: solid;
+  border-image-source: url("./assets/UI_images/img/border-image.png");
+  border-image-repeat: repeat;
+  border-image-slice: 6 6 6 6;
+  border-image-width: 18px;
+  border-width: 15px;
+  padding: 12px;
+  /* internal border */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* background */
+  background: url("./assets/UI_images/img/background-image.png") repeat repeat;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  background-position: center;
+}
+
+/* game div with golden background image*/
+.rpgui-container.framed-golden {
+  /* border */
+  border-style: solid;
+  border-image-source: url("./assets/UI_images/img/border-image-golden.png");
+  border-image-repeat: repeat;
+  border-image-slice: 4 4 4 4;
+  border-image-width: 18px;
+  border-width: 15px;
+  padding: 12px;
+  /* internal border */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* background */
+  background: url("./assets/UI_images/img/background-image-golden.png") repeat
+    repeat;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  background-position: center;
+}
+
+/* game div with golden2 background image*/
+.rpgui-container.framed-golden-2 {
+  /* border */
+  border-style: solid;
+  border-image-source: url("./assets/UI_images/img/border-image-golden2.png");
+  border-image-repeat: repeat;
+  border-image-slice: 8 8 8 8;
+  border-image-width: 18px;
+  border-width: 15px;
+  padding: 12px;
+  /* internal border */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* background */
+  background: url("./assets/UI_images/img/background-image-golden2.png") repeat
+    repeat;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  background-position: center;
+}
+
+/* game div with soft grey background image*/
+.rpgui-container.framed-grey {
+  position: relative;
+  /* border */
+  border-style: solid;
+  border-image-source: url("./assets/UI_images/img/border-image-grey.png");
+  border-image-repeat: repeat;
+  border-image-slice: 3 3 3 3;
+  border-image-width: 7px;
+  border-width: 7px;
+  padding: 12px;
+  /* internal border */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  /* background */
+  background: url("./assets/UI_images/img/background-image-grey.png") repeat
+    repeat;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  background-position: center;
+}
+
+.rpgui-button {
+  /* hide button default stuff */
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  overflow: hidden;
+  outline: none;
+  /* background */
+  background: url("./assets/UI_images/img/button.png") no-repeat no-repeat;
+  background-clip: padding-box;
+  background-origin: padding-box;
+  background-position: center;
+  background-size: 100% 100%;
+  /* font size */
+  font-size: 1em;
+  /* default size and display */
+  max-width: 100%;
+  min-width: 140px;
+  height: 60px;
+  display: inline-block;
+  /* padding */
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+/* button hover */
+.rpgui-button.hover,
+.rpgui-button:hover {
+  background-image: url("./assets/UI_images/img/button-hover.png");
+}
+
+/* button clicked */
+.rpgui-button.down,
+.rpgui-button:active {
+  background-image: url("./assets/UI_images/img/button-down.png");
+}
+
+.rpgui-progress {
+  height: 42px;
+  width: 90%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.stat {
+  display: inline-flex;
+}
+
+#healthBar,
+#manaBar, #xpBar {
+  display: inline-flex;
+  height: 42px;
+  width: 140px;
+}
+
+#leftBar {
+  height: 42px;
+  width: 20px;
+  left: 0px;
+  background-image: url("./assets/UI_images/img/progress-bar-left.png");
+  background-size: 100% 100%;
+}
+
+#alignBar{
+  margin-right: auto;
+}
+
+#xpAmount{
+  /* position:relative; */
+  height: 42px;
+  width: 65%;
+  background-image: linear-gradient(
+      transparent 0%,
+      transparent 20%,
+      black 20%,
+      black 22%,
+      lime 21%,
+      lime 78%,
+      black 78%,
+      black 80%,
+      transparent 80%,
+      transparent 100%
+    ),
+    url("./assets/UI_images/img/progress-bar-track.png");
+  background-repeat: no-repeat, repeat-x;
+  background-size: 0% 100%, 36px 100%;
+  background-position: left top;
+}
+
+#healthAmount {
+  /* position:relative; */
+  height: 42px;
+  width: 65%;
+  background-image: linear-gradient(
+      transparent 0%,
+      transparent 20%,
+      black 20%,
+      black 22%,
+      red 21%,
+      red 78%,
+      black 78%,
+      black 80%,
+      transparent 80%,
+      transparent 100%
+    ),
+    url("./assets/UI_images/img/progress-bar-track.png");
+  background-repeat: no-repeat, repeat-x;
+  background-size: 100% 100%, 36px 100%;
+  background-position: left top;
+  /* background-image:  linear-gradient( to bottom, transparent 5%, red 5% 95% ,transparent 95% 100%), linear-gradient( to right,  red 20%, transparent 20% 100%); */
+  /* background-image:  linear-gradient( to right, rgba(255, 0, 0, 0.5), transparent ),
+    linear-gradient( to bottom, black, transparent), url("../dist/img/progress-bar-track.png"); */
+  /* background-repeat: repeat-x;
+  background-size: 36px 100%; */
+}
+#manaAmount {
+  /* position:relative; */
+  height: 42px;
+  width: 65%;
+  background-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 20%,
+      black 20%,
+      black 22%,
+      blue 21%,
+      blue 78%,
+      black 78%,
+      black 80%,
+      transparent 80%,
+      transparent 100%
+    ),
+    url("./assets/UI_images/img/progress-bar-track.png");
+  background-repeat: no-repeat, repeat-x;
+  background-size: 100% 100%, 36px 100%;
+  background-position: left top;
+  /* background-image:  linear-gradient( to bottom, transparent 5%, red 5% 95% ,transparent 95% 100%), linear-gradient( to right,  red 20%, transparent 20% 100%); */
+  /* background-image:  linear-gradient( to right, rgba(255, 0, 0, 0.5), transparent ),
+    linear-gradient( to bottom, black, transparent), url("../dist/img/progress-bar-track.png"); */
+  /* background-repeat: repeat-x;
+  background-size: 36px 100%; */
+}
+
+@media (max-width: 600px) {
+  #xpAmount,#healthAmount,#manaAmount{
+    width:50%;
+  }
+  #healthBar,
+#manaBar, #xpBar {
+  display: inline-flex;
+  height: 42px;
+  width: 90px;
+}
+}
+
+#rightBar {
+  height: 42px;
+  width: 20px;
+  right: 0px;
+  background-image: url("./assets/UI_images/img/progress-bar-right.png");
+  background-size: 100% 100%;
+}
+
+/* progress bar left edge */
+.rpgui-progress-left-edge {
+  height: 42px;
+  width: 40px;
+  left: 0px;
+  background-image: url("./assets/UI_images/img/progress-bar-left.png");
+  background-size: 100% 100%;
+}
+
+/* progress bar right edge */
+.rpgui-progress-right-edge {
+  /* position: absolute; */
+  height: 42px;
+  width: 40px;
+  right: 0px;
+  background-image: url("./assets/UI_images/img/progress-bar-right.png");
+  background-size: 100% 100%;
+}
+
+/* progress bar background track */
+.rpgui-progress-track {
+  position: absolute;
+  height: 42px;
+  left: 40px;
+  right: 40px;
+  background-image: url("./assets/UI_images/img/progress-bar-track.png");
+  background-repeat: repeat-x;
+  background-size: 36px 100%;
+}
+
+/* progress bar - the fill itself */
+.rpgui-progress-fill {
+  position: absolute;
+  top: 9px;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  background-image: url("./assets/UI_images/img/progress.png");
+  background-repeat: repeat-x;
+  background-size: 36px 100%;
+}
+
+/* progress bar - blue color */
+.rpgui-progress-fill.blue {
+  background-image: url("./assets/UI_images/img/progress-blue.png");
+}
+
+/* progress bar - green color */
+.rpgui-progress-fill.green {
+  background-image: url("./assets/UI_images/img/progress-green.png");
+}
+
+/* progress bar - red color */
+.rpgui-progress-fill.red {
+  background-image: url("./assets/UI_images/img/progress-red.png");
+}
+
+span{
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+span.fade{
+  opacity: 1;
+}

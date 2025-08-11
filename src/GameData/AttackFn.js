@@ -7,6 +7,7 @@ import { gameItems } from "./Items";
 import { updateData } from "../GameFn/dateBaseFn";
 import { combatText } from "./GameText/CombatText";
 import { lose, defeatMonster, goTown } from "./ExploreFn";
+import { healthAndManaFunction } from "./InnFn";
 
 function isHit() {
   return Math.random() > 0.05;
@@ -50,6 +51,7 @@ function monstersTurn(setLocation, saveFile, setGameText) {
     }
   }
   function monsterAttacks() {
+    const [maxHealth]=healthAndManaFunction(saveFile)
     if (isHit()) {
       setGameText(
         (prevGameText) =>
@@ -69,11 +71,13 @@ function monstersTurn(setLocation, saveFile, setGameText) {
       );
 
       if (saveFile.health > damageTaken) {
-        healthText.innerText -= damageTaken;
+        currentHealth.innerText -= damageTaken;
         saveFile.health -= damageTaken;
         updateData(saveFile);
+        const healthPercentage=Math.round((saveFile.health / maxHealth) * 100)
+        healthAmount.style.backgroundSize=`${healthPercentage}% 100%, 36px 100%`
       } else {
-        healthText.innerText = 0;
+        currentHealth.innerText = 0;
         saveFile.health = 0;
         updateData(saveFile);
         lose(setLocation, saveFile, setGameText);
@@ -151,7 +155,7 @@ function playersTurn(setLocation, saveFile, setGameText, monster, weaponType) {
 }
 
 function reduceMana(manaNeeded, saveFile) {
-  manaText.innerText -= manaNeeded;
+  currentMana.innerText -= manaNeeded;
   saveFile.mana -= manaNeeded;
   updateData(saveFile);
 }
@@ -273,8 +277,8 @@ function usePotion(setLocation, saveFile, type, maxAmount) {
   button4.style.display = "inline";
   button4.removeAttribute("disabled");
   type === "health"
-    ? (healthText.innerText = restoredAmount)
-    : (manaText.innerText = restoredAmount);
+    ? (currentHealth.innerText = restoredAmount)
+    : (currentMana.innerText = restoredAmount);
   saveFile[type] = restoredAmount;
   updateData(saveFile);
 }
